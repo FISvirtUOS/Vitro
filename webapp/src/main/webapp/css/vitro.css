@@ -171,8 +171,8 @@ ul.language-dropdown li a {
     display: block;
     font-size: 1.4em;
 }
-ul.dropdown li#user-menu {
-    background: url(../images/arrowDownOverAccount.gif) right 9px no-repeat;
+ul.dropdown li#user-menu { 
+    background: url(../images/arrowDownAccount.gif) right 9px no-repeat;
     min-width:110px;
     position: relative;
 }
@@ -183,17 +183,17 @@ ul.dropdown li#user-menu a {
 ul.dropdown li#user-menu.hover,
 ul.dropdown li#user-menu:hover,
 ul.language-dropdown li#language-menu.hover,
-ul.language-dropdown li#language-menu:hover {
-    color: #000 !important;
-    position: relative;
+ul.language-dropdown li#language-menu:hover { 
+    color: #fff; 
+    position: relative; 
     background: #fff url(../images/arrowDownAccount.gif) right 9px no-repeat;
     border-bottom: 1px solid #cdcfcf;
 }
 ul.dropdown li.hover a,
 ul.dropdown li:hover a,
 ul.language-dropdown li.hover a,
-ul.language-dropdown li:hover a {
-    color: #000 !important;
+ul.language-dropdown li:hover a { 
+    color: #fff; 
     margin-left:10px;
 }
 /* LEVEL TWO */
@@ -253,8 +253,8 @@ ul.dropdown li:hover > ul {
 ul.language-dropdown {
     position: relative;
 }
-ul.language-dropdown li#language-menu {
-    background: url(../images/arrowDownOverAccount.gif) right 9px no-repeat;
+ul.language-dropdown li#language-menu { 
+    background: url(../images/arrowDownAccount.gif) right 9px no-repeat;
     min-width:110px;
     position: relative;
     margin-right: -10px !important;
@@ -428,7 +428,7 @@ a.filter-search {
 		height: 34px;
 		font-size: 18px;
 		text-align: center;
-		margin-left: 35px;
+		margin-left: 0px;
 		padding: 0;
 		line-height: 35px;
 }
