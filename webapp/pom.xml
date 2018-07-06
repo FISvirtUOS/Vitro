@@ -7,13 +7,21 @@
 
     <groupId>org.vivoweb</groupId>
     <artifactId>vitro-webapp</artifactId>
+<<<<<<< HEAD
     <version>1.11.1-SNAPSHOT</version>
+=======
+    <version>1.10.0</version>
+>>>>>>> [maven-scm-plugin] prepare release vitro-1.10.0
     <packaging>war</packaging>
 
     <parent>
         <groupId>org.vivoweb</groupId>
         <artifactId>vitro-project</artifactId>
+<<<<<<< HEAD
         <version>1.11.1-SNAPSHOT</version>
+=======
+        <version>1.10.0</version>
+>>>>>>> [maven-scm-plugin] prepare release vitro-1.10.0
         <relativePath>..</relativePath>
     </parent>
 
@@ -41,7 +49,11 @@
         <dependency>
             <groupId>org.vivoweb</groupId>
             <artifactId>vitro-api</artifactId>
+<<<<<<< HEAD
             <version>1.11.1-SNAPSHOT</version>
+=======
+            <version>1.10.0</version>
+>>>>>>> [maven-scm-plugin] prepare release vitro-1.10.0
         </dependency>
     </dependencies>
 </project>
