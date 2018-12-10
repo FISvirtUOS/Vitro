@@ -11,3 +11,15 @@
 # Find out how to use this file at
 # https://wiki.duraspace.org/display/VIVO/Using+Short+Views+in+Release+1.5
 #
+
+@prefix foaf: <http://xmlns.com/foaf/0.1/>
+@prefix display: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
+@prefix mydomain: <https://fis.uos.de/vivouos/individual/> .
+
+foaf:Organization
+    display:hasCustomView   mydomain:organizationBrowseView .
+
+mydomain:organizationBrowseView
+    a                           display:customViewForIndividual ;
+    display:appliesToContext    "BROWSE" ;
+    display:hasTemplate         "view-browse-organization.ftl" .
