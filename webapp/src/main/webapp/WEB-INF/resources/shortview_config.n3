@@ -19,6 +19,7 @@
 @prefix vivo: <http://vivoweb.org/ontology/core#> .
 @prefix kdsf: <http://kerndatensatz-forschung.de/owl/Basis#> .
 
+
 foaf:Organization
     display:hasCustomView   mydomain:organizationBrowseView .
 
