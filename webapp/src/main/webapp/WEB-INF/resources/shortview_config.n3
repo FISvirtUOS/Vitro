@@ -15,8 +15,16 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/>
 @prefix display: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix mydomain: <https://fis.uos.de/vivouos/individual/> .
+@prefix datagetters: <java:edu.cornell.mannlib.vitro.webapp.utils.dataGetter.> .
+@prefix vivo: <http://vivoweb.org/ontology/core#> .
 
 foaf:Organization
+    display:hasCustomView   mydomain:organizationBrowseView .
+
+vivo:AcademicDepartment
+    display:hasCustomView   mydomain:organizationBrowseView .
+
+vivo:Institute
     display:hasCustomView   mydomain:organizationBrowseView .
 
 mydomain:organizationBrowseView
