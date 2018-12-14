@@ -12,11 +12,12 @@
 # https://wiki.duraspace.org/display/VIVO/Using+Short+Views+in+Release+1.5
 #
 
-@prefix foaf: <http://xmlns.com/foaf/0.1/>
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix display: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix mydomain: <https://fis.uos.de/vivouos/individual/> .
 @prefix datagetters: <java:edu.cornell.mannlib.vitro.webapp.utils.dataGetter.> .
 @prefix vivo: <http://vivoweb.org/ontology/core#> .
+@prefix kdsf: <http://kerndatensatz-forschung.de/owl/Basis#> .
 
 foaf:Organization
     display:hasCustomView   mydomain:organizationBrowseView .
@@ -31,3 +32,46 @@ mydomain:organizationBrowseView
     a                           display:customViewForIndividual ;
     display:appliesToContext    "BROWSE" ;
     display:hasTemplate         "view-browse-organization.ftl" .
+
+kdsf:Professoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+mydomain:professorBrowseView
+    a                           display:customViewForIndividual ;
+    display:appliesToContext    "BROWSE" ;
+    display:hasTemplate         "view-browse-professor.ftl" ;
+    display:hasDataGetter mydomain:professordenominationDG ;
+    display:hasDataGetter mydomain:professorprofessurDG .
+
+mydomain:professordenominationDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "denom" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+PREFIX uoscore:  <https://fis.uos.de/vivouos/ontology/uoscore/>
+SELECT ?profdenom ?proflabel 
+WHERE
+{
+?profuri uoscore:Denomination ?profdenom .
+  ?profuri 
+	a kdsf:Professoren ;
+	rdfs:label ?proflabel .
+}
+	""" .
+
+mydomain:professorprofessurDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "professur" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+SELECT ?bezeichnung ?proflabel 
+WHERE
+{
+?profuri kdsf:BezeichnungDerProfessur ?bezeichnung .
+  ?profuri 
+	a kdsf:Professoren ;
+	rdfs:label ?proflabel .
+}
+	""" .
