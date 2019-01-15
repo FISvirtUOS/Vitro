@@ -25,6 +25,9 @@ public class Controllers {
     public static final String SEARCH_URL = "/search";
     public static final String ENTITY = "/entity";
 
+    public static final String IMPRINT = "/imprint";
+    public static final String DATA_PROTECTION = "/dataprotection";
+
     public static final String RETRY_URL = "editForm";
     public static final String TAB_ENTITIES = "/TabEntitiesController";
 
