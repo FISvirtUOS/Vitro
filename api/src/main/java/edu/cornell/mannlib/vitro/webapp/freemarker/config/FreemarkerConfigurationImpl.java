@@ -310,7 +310,7 @@ public class FreemarkerConfigurationImpl extends Configuration {
 			urls.put("siteAdmin", UrlBuilder.getUrl(Route.SITE_ADMIN));
 
 			urls.put("imprint", UrlBuilder.getUrl(Route.IMPRINT));
-			urls.put("dataprotection", UrlBuilder.getUrl(Route.DATA_PROTECTION));
+			urls.put("privacypolicy", UrlBuilder.getUrl(Route.PRIVACY_POLICY));
 
 			urls.put("themeImages", UrlBuilder.getUrl(themeDir + "/images"));
 			urls.put("images", UrlBuilder.getUrl("/images"));

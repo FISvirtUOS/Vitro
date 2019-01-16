@@ -15,12 +15,12 @@ import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.Tem
 
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet(name = "DataprotectionController", urlPatterns = {"/dataprotection"} )
-public class DataprotectionController extends FreemarkerHttpServlet {
+@WebServlet(name = "PrivacyPolicyController", urlPatterns = {"/privacypolicy"} )
+public class PrivacyPolicyController extends FreemarkerHttpServlet {
 	
     private static final long serialVersionUID = 1L;
-    private static final Log log = LogFactory.getLog(DataprotectionController.class);
-    private static final String TEMPLATE_DEFAULT = "dataprotection.ftl";
+    private static final Log log = LogFactory.getLog(PrivacyPolicyController.class);
+    private static final String TEMPLATE_DEFAULT = "privacypolicy.ftl";
     
     @Override
     protected ResponseValues processRequest(VitroRequest vreq) {
@@ -33,7 +33,7 @@ public class DataprotectionController extends FreemarkerHttpServlet {
 
     @Override
     protected String getTitle(String siteName, VitroRequest vreq) {
-    	return "Data Protection " + siteName;
+    	return "Privacy policy " + siteName;
     }
 
 }
