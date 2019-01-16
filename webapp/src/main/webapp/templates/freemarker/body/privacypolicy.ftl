@@ -4,19 +4,19 @@
 
 <#-- <h2>${siteName!}</h2> -->
 
-<section id="imprint" role="region">
+<section class="uos_style" role="region">
     <h2>Privacy policy</h2>
 <h3>1. An overview of data protection</h3>
 <h4>General information</h4>
 <p>The following information will provide you with an easy to navigate overview of what will happen with your personal data when you visit our website. The term “personal data” comprises all data that can be used to personally identify you. For detailed information about the subject matter of data protection, please consult our Data Protection Declaration, which we have included beneath this copy.</p>
 <h4>Data recording on our website</h4>
 <h5>Who is the responsible party for the recording of data on this website (i.e. the “controller”)?</h5>
-<p>The data on this website is processed by the operator of the website, whose contact information is available under section “<a href="https://www.uni-osnabrueck.de/en/service_sites/legal_notice.html" title="Externer Link - öffnet in neuem Fenster" target="_blank" class="external-link">Legal notice</a>” on this website.</p>
+<p>The data on this website is processed by the operator of the website, whose contact information is available under section “<a href="${urls.imprint}" title="Internal Link - opens in a new window" target="_blank" class="external-link">Legal notice</a>” on this website.</p>
 <h5>How do we record your data?</h5>
 <p>We collect your data as a result of your sharing of your data with us. This may, for instance be information you enter into our contact form.
 </p>
 <p>Our IT systems automatically record other data when you visit our website. This data comprises primarily technical information (e.g. web browser, operating system or time the site was accessed). This information is recorded automatically when you access our website. </p><h5>What are the purposes we use your data for?</h5><p>A portion of the information is generated to guarantee the error free provision of the website. Other data may be used to analyse your user patterns.</p>
-<h5>What rights do you have as far as your information is concerned?</h5><p>You have the right to receive information about the source, recipients and purposes of your archived personal data at any time without having to pay a fee for such disclosures. You also have the right to demand that your data are rectified, blocked or eradicated. Please do not hesitate to contact us at any time under the address disclosed in section “<a href="https://www.uni-osnabrueck.de/en/service_sites/legal_notice.html" title="Externer Link - öffnet in neuem Fenster" target="_blank" class="external-link">Legal Notice</a>” on this website if you have questions about this or any other data protection related issues. You also have the right to log a complaint with the competent supervising agency.
+<h5>What rights do you have as far as your information is concerned?</h5><p>You have the right to receive information about the source, recipients and purposes of your archived personal data at any time without having to pay a fee for such disclosures. You also have the right to demand that your data are rectified, blocked or eradicated. Please do not hesitate to contact us at any time under the address disclosed in section “<a href="${urls.imprint}" title="Internal Link - opens in a new window" target="_blank" class="external-link">Legal Notice</a>” on this website if you have questions about this or any other data protection related issues. You also have the right to log a complaint with the competent supervising agency.
 </p>
 <p>Moreover, under certain circumstances, you have the right to demand the restriction of the processing of your personal data. For details, please consult the Data Protection Declaration under section "Right to Restriction of Data Processing." </p><h5>Analysis tools and tools provided by third parties</h5>
 <p>There is a possibility that your browsing patterns will be statistically analysed when your visit our website. Such analyses are performed primarily with cookies and with what we refer to as analysis programmes. As a rule, the analyses of your browsing patterns are conducted anonymously; i.e. the browsing patterns cannot be traced back to you. You have the option to object to such analyses or you can prevent their performance by not using certain tools. You do have the option to object to such analyses. We will brief you on the objection options in this Data Protection Declaration. </p>
