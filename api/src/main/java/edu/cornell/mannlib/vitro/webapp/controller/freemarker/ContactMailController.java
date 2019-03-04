@@ -45,8 +45,9 @@ public class ContactMailController extends FreemarkerHttpServlet {
 
     private final static String WEB_USERNAME_PARAM  = "webusername";
     private final static String WEB_USEREMAIL_PARAM = "webuseremail";
-    private final static String COMMENTS_PARAM      = "s34gfd88p9x1";
-
+	private final static String COMMENTS_PARAM      = "s34gfd88p9x1";
+	private final static String WEB_SUBJECT      	= "websubject";
+	
     private final static String TEMPLATE_CONFIRMATION = "contactForm-confirmation.ftl";
     private final static String TEMPLATE_EMAIL = "contactForm-email.ftl";
     private final static String TEMPLATE_BACKUP = "contactForm-backup.ftl";
@@ -114,7 +115,7 @@ public class ContactMailController extends FreemarkerHttpServlet {
 
 	    String originalReferer = getOriginalRefererFromSession(vreq);
 
-	    String msgText = composeEmail(webusername, webuseremail, comments,
+	    String msgText = composeEmail(webusername, webuseremail, websubject, comments, 
 	    		deliveryfrom, originalReferer, vreq.getRemoteAddr(), vreq);
 
 	    try {
@@ -311,7 +312,11 @@ public class ContactMailController extends FreemarkerHttpServlet {
 
         if( webuseremail.isEmpty() ){
             return "Please enter a valid email address.";
-        }
+		}
+		
+		if( websubject.isEmpty() ){
+            return "Please enter a valid subject.";
+        } 
 
         if (comments.isEmpty()) {
             return "Please enter your comments or questions in the space provided.";
@@ -380,8 +385,8 @@ public class ContactMailController extends FreemarkerHttpServlet {
 				+ "at least one email address.");
 		return new TemplateResponseValues(TEMPLATE_ERROR, body);
 	}
-
-	private ResponseValues errorParametersNotValid(String errorMsg, String webusername, String webuseremail, String comments) {
+	
+	private ResponseValues errorParametersNotValid(String errorMsg, String webusername, String websubject, String webuseremail, String comments) {
         Map<String, Object> body = new HashMap<String, Object>();
 		body.put("errorMessage", errorMsg);
 		body.put("formAction", "submitFeedback");
