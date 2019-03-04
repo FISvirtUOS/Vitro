@@ -14,7 +14,7 @@
     <p>${i18n().interest_thanks(siteName)}</p>
 
     <form name="contact_form" id="contact_form" class="customForm" action="${formAction!}" method="post" onSubmit="return ValidateForm('contact_form');" role="contact form">
-        <input type="hidden" name="RequiredFields" value="webusername,webuseremail,s34gfd88p9x1" />
+        <input type="hidden" name="RequiredFields" value="webusername,webuseremail,s34gfd88p9x1,websubject" />
         <input type="hidden" name="RequiredFieldsNames" value="Name,Email address,Comments" />
         <input type="hidden" name="EmailFields" value="webuseremail" />
         <input type="hidden" name="EmailFieldsNames" value="emailaddress" />
@@ -25,6 +25,10 @@
 
         <label for="webuseremail">${i18n().email_address} <span class="requiredHint"> *</span></label>
         <input type="text" name="webuseremail"  value="${webuseremail!}"/>
+
+        <label for="websubject">${i18n().mail_subject} <span class="requiredHint"> *</span></label>
+        <input type="text" name="websubject"  value="${websubject!}"/>
+
 
         <label>${i18n().comments_questions} <span class="requiredHint"> *</span></label>
         <textarea name="s34gfd88p9x1" rows="10" cols="90">${comments!}</textarea>

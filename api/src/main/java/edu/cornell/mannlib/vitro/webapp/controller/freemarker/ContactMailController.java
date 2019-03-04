@@ -76,14 +76,15 @@ public class ContactMailController extends FreemarkerHttpServlet {
 		String webusername = nonNullAndTrim(vreq, WEB_USERNAME_PARAM);
 		String webuseremail = nonNullAndTrim(vreq, WEB_USEREMAIL_PARAM);
 		String comments = nonNullAndTrim(vreq, COMMENTS_PARAM);
+		String websubject = nonNullAndTrim(vreq, WEB_SUBJECT);
 	    String formType = nonNullAndTrim(vreq, "DeliveryType");
 	    String captchaInput = nonNullAndTrim(vreq, "defaultReal");
 	    String captchaDisplay = nonNullAndTrim(vreq, "defaultRealHash");
 
-	    String errorMsg = validateInput(webusername, webuseremail, comments, captchaInput, captchaDisplay);
+	    String errorMsg = validateInput(webusername, webuseremail, websubject, comments, captchaInput, captchaDisplay);
 
 		if ( errorMsg != null) {
-			return errorParametersNotValid(errorMsg, webusername, webuseremail, comments);
+			return errorParametersNotValid(errorMsg, webusername, websubject, webuseremail, comments);
 		}
 
 		String spamReason = checkForSpam(comments, formType);
@@ -91,7 +92,7 @@ public class ContactMailController extends FreemarkerHttpServlet {
 			return errorSpam();
 		}
 
-		return processValidRequest(vreq, webusername, webuseremail, recipients, comments);
+		return processValidRequest(vreq, webusername, webuseremail, websubject, recipients, comments);
 	}
 
 	private String[] figureRecipients(VitroRequest vreq) {
@@ -104,8 +105,8 @@ public class ContactMailController extends FreemarkerHttpServlet {
 	}
 
 	private ResponseValues processValidRequest(VitroRequest vreq,
-			String webusername, String webuseremail, String[] recipients,
-			String comments) throws Error {
+			String webusername, String webuseremail, String websubject,
+			String[] recipients, String comments) throws Error {
 		String statusMsg = null; // holds the error status
 
 		ApplicationBean appBean = vreq.getAppBean();
@@ -208,7 +209,7 @@ public class ContactMailController extends FreemarkerHttpServlet {
     }
 
     private String composeEmail(String webusername, String webuseremail,
-    							String comments, String deliveryfrom,
+								String websubject, String comments, String deliveryfrom,
     							String originalReferer, String ipAddr,
     							HttpServletRequest request) {
 
@@ -217,7 +218,8 @@ public class ContactMailController extends FreemarkerHttpServlet {
 
         email.put("subject", deliveryfrom);
         email.put("name", webusername);
-        email.put("emailAddress", webuseremail);
+		email.put("emailAddress", webuseremail);
+		email.put("websubject", websubject);
         email.put("comments", comments);
         email.put("ip", ipAddr);
         if ( !(originalReferer == null || originalReferer.equals("none")) ) {
@@ -300,7 +302,7 @@ public class ContactMailController extends FreemarkerHttpServlet {
 		return (value == null) ? "" : value.trim();
 	}
 
-    private String validateInput(String webusername, String webuseremail,
+    private String validateInput(String webusername, String webuseremail, String websubject,
     							 String comments, String captchaInput, String captchaDisplay) {
 
         if( webusername.isEmpty() ){
@@ -385,6 +387,7 @@ public class ContactMailController extends FreemarkerHttpServlet {
 		body.put("formAction", "submitFeedback");
 		body.put("webusername", webusername);
 		body.put("webuseremail", webuseremail);
+		body.put("websubject", websubject);
 		body.put("comments", comments);
 		return new TemplateResponseValues(TEMPLATE_FORM, body);
 	}
