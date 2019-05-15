@@ -109,13 +109,13 @@ mydomain:projectstaffDG
 PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
 PREFIX obo:  <http://purl.obolibrary.org/obo/>
-SELECT ?stafflabel 
+SELECT ?stafflabel ?staffuri 
 WHERE
 {
 ?individualUri a kdsf:Drittmittelprojekt .
 ?individualUri obo:BFO_0000055 ?memberrole .
-?memberrole obo:RO_0000052 ?projektmitarbeiter .
-?projektmitarbeiter rdfs:label ?stafflabel
+?memberrole obo:RO_0000052 ?staffuri .
+?staffuri rdfs:label ?stafflabel
 }
 	""" .
 
