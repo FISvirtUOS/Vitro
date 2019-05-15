@@ -423,9 +423,13 @@ public class PagedSearchController extends FreemarkerHttpServlet {
         });
 
         List<VClassSearchLink> vClassLinks = new ArrayList<VClassSearchLink>(classes.size());
-        for (VClass vc : classes) {
-            long count = typeURItoCount.get(vc.getURI());
-            vClassLinks.add(new VClassSearchLink(qtxt, vc, count ));
+        List<String> check_classes = new ArrayList<String>(classes.size());
+        for (VClass vc : classes) {                        
+            if (!check_classes.contains(vc.getName())) { // only add them once (aequivalent classes)
+                check_classes.add(vc.getName());
+                long count = typeURItoCount.get(vc.getURI());
+                vClassLinks.add(new VClassSearchLink(qtxt, vc, count ));
+            }    
         }
 
         return vClassLinks;

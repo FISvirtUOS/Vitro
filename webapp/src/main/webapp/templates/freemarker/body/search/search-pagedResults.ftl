@@ -41,12 +41,8 @@
 
     <#if classLinks?has_content>
         <div class="searchTOC">
-            <#if classGroupName?has_content>
-                <h4>${i18n().limit} ${classGroupName} ${i18n().to}</h4>
-            <#else>
-                <h4>${i18n().limit_to}</h4>
-            </#if>
-            <ul>
+            <h4>${i18n().uos_search_filter}</h4>
+            <ul>           
             <#list classLinks as link>
                 <li><a href="${link.url}" title="${i18n().class_link}">${link.text}</a><span>(${link.count})</span></li>
             </#list>
