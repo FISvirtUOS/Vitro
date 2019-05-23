@@ -424,9 +424,12 @@ public class PagedSearchController extends FreemarkerHttpServlet {
 
         List<VClassSearchLink> vClassLinks = new ArrayList<VClassSearchLink>(classes.size());
         List<String> check_classes = new ArrayList<String>(classes.size());
-        List<String> unwanted_classes = new ArrayList<String>(2);
-        unwanted_classes.add("Projekt");
-        unwanted_classes.add("Forschungsprojekt");
+        List<String> unwanted_classes = new ArrayList<String>() {{
+            add("Projekt");
+            add("Forschungsprojekt");
+            add("Abteilung");
+            add("Organisation");
+        }};
         for (VClass vc : classes) {                        
             if (!check_classes.contains(vc.getName()) && !unwanted_classes.contains(vc.getName())) { // only add them once (aequivalent classes)
                 check_classes.add(vc.getName());
