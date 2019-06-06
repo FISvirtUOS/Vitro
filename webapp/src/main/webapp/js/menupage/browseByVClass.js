@@ -53,9 +53,9 @@ var browseByVClass = {
         // if the user navigates with the back button
         this.browseVClasses.children('li').each( function() {
            $(this).find('a').click(function () {
-                // the extra space is needed to prevent odd scrolling behavior
-                location.hash = $(this).attr('data-uri') + ' ';
-           });
+                // the extra space is needed to prevent odd scrolling behavior -> i removed it internal ticket FisvirtUOS/VIVO#72
+                location.hash = $(this).attr('data-uri');
+           }); 
         });
 
         // Call the pagination listener
