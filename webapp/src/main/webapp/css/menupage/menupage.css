@@ -220,9 +220,6 @@ nav#alpha-browse-container {
     margin-right: 17px;
     min-height: 170px;
 }
-h3.selected-class {
-    padding: .8em 0 0 0;
-}
 #individuals-in-class ul {
     list-style: none;
 }
