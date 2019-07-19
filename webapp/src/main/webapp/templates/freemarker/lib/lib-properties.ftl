@@ -327,6 +327,37 @@ name will be used as the label. -->
     </#list>
 </#macro>
 
+<#-- Check if project is still running or finished -->
+<#macro projectRuntime ProjectEndDateTime >
+    <#assign aDateTime = .now>
+    <#if ProjectEndDateTime?has_content >
+        <#list ProjectEndDateTime as someDateString>
+            <#if someDateString.end?datetime('iso') < aDateTime>
+                <span>${i18n().project_finished}</span>
+            <#else>
+                <span>${i18n().project_running}</span>
+            </#if>
+        </#list>
+    <#else>
+        <span>${i18n().project_running}</span>
+    </#if>
+</#macro>
+
+
+<#macro findautoruospresentation AutorAndRole >
+     <#if AutorAndRole?has_content>
+        <ul id="individual-AutorAndRole" role="list">
+            <#list AutorAndRole as resultRow>
+                <li class="raLink">
+                    <a class="raLink" href="${profileUrl(resultRow.staffuri)}" title="research area">
+                        ${resultRow["stafflabel"]}
+                    </a>
+                </li>
+            </#list>
+        </ul>  
+    </#if>
+</#macro>
+
 <#macro mostSpecificTypesPerson individual editable>
     <#list individual.mostSpecificTypes as type>
         <div id="titleContainer"><span class="<#if editable>display-title-editable<#else>display-title-not-editable</#if>">${type}</span></div>
