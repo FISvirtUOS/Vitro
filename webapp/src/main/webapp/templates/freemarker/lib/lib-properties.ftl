@@ -333,13 +333,13 @@ name will be used as the label. -->
     <#if ProjectEndDateTime?has_content >
         <#list ProjectEndDateTime as someDateString>
             <#if someDateString.end?datetime('iso') < aDateTime>
-                <span>${i18n().project_finished}</span>
+                <span>${i18n().project_status}: ${i18n().project_finished}</span>
             <#else>
-                <span>${i18n().project_running}</span>
+                <span>${i18n().project_status}: ${i18n().project_running}</span>
             </#if>
         </#list>
     <#else>
-        <span>${i18n().project_running}</span>
+        <span>${i18n().project_status}: ${i18n().project_running}</span>
     </#if>
 </#macro>
 
