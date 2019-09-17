@@ -56,8 +56,8 @@
 
 <#macro dataPropertyList property editable template=property.template>
     <#list property.statements as statement>
-        <@propertyListItem property statement editable ><#include "${template}"></@propertyListItem>
-    </#list>
+<@propertyListItem property statement editable ><#include "${template}"></@propertyListItem>
+    </#list> 
 </#macro>
 
 <#macro objectProperty property editable template=property.template>
@@ -165,9 +165,8 @@ name will be used as the label. -->
     <#else>
         <#local rangeUri = "" />
     </#if>
-    <li role="listitem">
-        <#nested>
-        <@editingLinks "${property.localName}" "${property.name}" statement editable rangeUri/>
+<li role="listitem"><#nested>
+<@editingLinks "${property.localName}" "${property.name}" statement editable rangeUri/>
     </li>
 </#macro>
 
@@ -340,21 +339,6 @@ name will be used as the label. -->
         </#list>
     <#else>
         <span>${i18n().project_status}: ${i18n().project_running}</span>
-    </#if>
-</#macro>
-
-
-<#macro findautoruospresentation AutorAndRole >
-     <#if AutorAndRole?has_content>
-        <ul id="individual-AutorAndRole" role="list">
-            <#list AutorAndRole as resultRow>
-                <li class="raLink">
-                    <a class="raLink" href="${profileUrl(resultRow.staffuri)}" title="research area">
-                        ${resultRow["stafflabel"]}
-                    </a>
-                </li>
-            </#list>
-        </ul>  
     </#if>
 </#macro>
 
