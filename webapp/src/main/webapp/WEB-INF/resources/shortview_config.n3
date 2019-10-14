@@ -262,10 +262,11 @@ mydomain:presentationdateDG
 	display:query """
 PREFIX uoscore: <https://fis.uos.de/vivouos/ontology/uoscore/>
 PREFIX vivo: <http://vivoweb.org/ontology/core#>
-SELECT ?date
+SELECT ?date ?video
 WHERE
 {
 ?individualUri a vivo:Presentation .
-?individualUri uoscore:veranstaltungsdatum ?date
+?individualUri uoscore:veranstaltungsdatum ?date .
+?individualUri uoscore:videovortrag ?video
 }
     """ .
