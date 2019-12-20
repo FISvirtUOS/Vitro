@@ -66,15 +66,19 @@
                 </#if>
         </div></div>
 
-        <button type="button" id="applyFilterButton">Filter anwenden</button>
+        <div id="button_container">
+            <button type="button" id="applyFilterButton">Filter anwenden</button>
 
-        <button onclick="cloneSelect()">MG Filter hinzufügen</button>
+            <button type="button" onclick="cloneSelect()">MG Filter hinzufügen</button>
+
+            <button type="button" id="resetFilterButton" onclick="resetFilter()" style="display: none;" disabled>Reset Filter</button>
+        </div>
 
         <#-- show "selected" filter -->
         <div id="show_filter_container">
-            <p id="showfilterRT"></p>
-            <p id="showfilterFB"></p>
-            <p id="showfilterMG"></p>
+            <p style="display: none;" class="show-filter" id="showfilterRT"></p>
+            <p style="display: none;" class="show-filter" id="showfilterFB"></p>
+            <p style="display: none;" class="show-filter" id="showfilterMG"></p>
         </div>
 
         <#-- for saving the active filters -->
@@ -127,19 +131,50 @@
       clone.id = select.getAttribute("id") + selectionCounter++;
       clone.innerHTML = "";
       document.getElementById("show_filter_container").appendChild(clone);
+      $("#" + clone.id).hide();
     }
 
     function setFilter(el) {
-        var id = el.id;
-        console.log("id:" + id);
-        var filter = $('#' + id + ' option:selected').text();
-        console.log("filter:" + filter);
-        if (filter && ($('#' + id + ' option:selected').val() != "")) {
-            console.log("setze filter:" + filter);
-            $("#show" + id).text(filter);
-        } else {
-            console.log("erkenne den filter nicht:" + filter);
-             $("#show" + id).text("");
-        }
+        console.log("wird gerade ausgeaut ;)");
     }
+
+    function resetFilter() {
+        console.log("Reset Filter...");
+
+        $("#filterRT").val("");
+        $("#savefilterRT").val("");
+        $("#showfilterRT").text("");
+        $("#showfilterRT").hide();
+
+        $("#filterFB").val("");
+        $("#savefilterFB").val("");
+        $("#showfilterFB").text("");
+        $("#showfilterFB").hide();
+
+        $("#filterMG").val("");
+        $("#savefilterMG").val("");
+        $("#showfilterMG").text("");
+        $("#showfilterMG").hide();
+
+        var count = 0;
+        while($("#savefilterMG" + count).length) {
+            
+            $("#filterMG" + count).remove();
+            $("#savefilterMG" + count).remove();
+            $("#showfilterMG" + count).remove();
+            count = count + 1;
+        }
+
+        selectionCounter = 0;
+
+        // ToDo reset Session vars
+
+
+        $("#resetFilterButton").prop('disabled', true);
+        $("#resetFilterButton").removeAttr("style").hide();
+    }
+
+    $('#browse-classes li a').on('click', function(event) {
+        resetFilter();
+    });
 </script>

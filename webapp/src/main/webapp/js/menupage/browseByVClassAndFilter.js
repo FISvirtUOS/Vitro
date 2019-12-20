@@ -46,14 +46,16 @@ var browseByVClass = {
             var uri = $('#browse-classes li a.selected').attr('data-uri');
             var alpha = $(this).attr('data-alpha');
 
+            // check if some filters are set
             var filterRT = $('#savefilterRT').val();
             var filterFB = $('#savefilterFB').val();
             var filterMG = $('#savefilterMG').val();
 
+            // if filters are set, get individuals with filters
             if (filterRT || filterFB || filterMG) {
                 browseByVClass.getIndividualsWithFilters( alpha, 1, false)
                 return false
-            } else {
+            } else { // else get all Drittmittel instances
                 browseByVClass.getIndividuals(uri, alpha);
                 return false;
             }
@@ -66,6 +68,11 @@ var browseByVClass = {
                 // the extra space is needed to prevent odd scrolling behavior -> i removed it internal ticket FisvirtUOS/VIVO#72
                 location.hash = $(this).attr('data-uri');
            }); 
+        });
+
+        $("#resetFilterButton").click(function() {
+            browseByVClass.defaultVClass();
+            return false;
         });
 
         // Call the pagination listener
@@ -103,10 +110,27 @@ var browseByVClass = {
             console.log("Apply Filter wurde betätigt!"); 
 
             //set filter in invisible field in Dom
-            $("#savefilterRT").val($('#filterRT').val());
-            $("#savefilterFB").val($('#filterFB').val());
+            var filterRT = $('#filterRT').val();
+            $("#savefilterRT").val(filterRT);
+            if (filterRT != "") {
+                $("#showfilterRT").text($('#filterRT option:selected').text());
+                $("#showfilterRT").show();
+            }
+
+            var filterFB = $('#filterFB').val();
+            $("#savefilterFB").val(filterFB);
+            if (filterFB != "") {
+                $("#showfilterFB").text($('#filterFB option:selected').text());
+                $("#showfilterFB").show();
+            }
+
             var filterMG = $("#filterMG").val();
             $("#savefilterMG").val(filterMG);
+            if (filterMG != "") {
+                $("#showfilterMG").text($('#filterMG option:selected').text());
+                $("#showfilterMG").show();
+            }
+
 
             if (filterMG) {
                 var count = 0;
@@ -120,10 +144,13 @@ var browseByVClass = {
                 while (filterMG != null){
                     if(filterMG != "") {
                         $("#savefilterMG" + count).val(filterMG);
+                        $("#showfilterMG" + count).text($('#filterMG' + count + ' option:selected').text());
+                        $("#showfilterMG" + count).show();
                     }
                     
-                    if ($("#savefilterMG" + ++count).length) {
-                        filterMG = $("#savefilterMG" + count).val();
+                    count = count + 1;
+                    if ($("#savefilterMG" + count).length) {
+                        filterMG = $("#filterMG" + count).val();
                     } else{
                         filterMG = null;
                     }
@@ -132,40 +159,42 @@ var browseByVClass = {
 
             // do the magic Sparql Query stuff :P
             browseByVClass.getIndividualsWithFilters("all", 1, false);
+
+            // activate/show reset filter button
+            $("#resetFilterButton").prop('disabled', false);
+            $("#resetFilterButton").show();
         });
     },
     
 
     // check for existing filters
     checkForFilter: function() {
-        var filterExists = document.getElementById("filterFB");
-        if(filterExists != null) {
-            console.log("Check ob Filter vorhanden sind");
-            $.getJSON("/vivouos/dataservice?getFilterForRenderedSearchIndividualsByVClass=1", function(results) {
-                var individualList = "";
-                
-                // Catch exceptions when empty individuals result set is returned
-                // This is very likely to happen now since we don't have individual counts for each letter and always allow the result set to be filtered by any letter
-                if ( results == null ) {
-                    console.log("Keine Filter vorhanden");
-                    //do nothing
-                } else {
-                    console.log("Irgendwelche Filter sind da");
-                    if (results.filterFB != null) {
-                        $("#showFilterFB").val(results.filterFB);
-                        $("#saveFilterFB").val(results.filterFB);
-                    }
-                    if (results.filterRT != null) {
-                        $("#showFilterRT").val(results.filterRT);
-                        $("#saveFilterRT").val(results.filterRT);
-                    }
-                    if (results.filterMG != null) {
-                        $("#showFilterMG").val(results.filterMG);
-                        $("#saveFilterMG").val(results.filterMG);
-                    }
+        
+        console.log("Check ob Filter vorhanden sind");
+        $.getJSON("/vivouos/dataservice?getFilterForRenderedSearchIndividualsByVClass=1", function(results) {
+            var individualList = "";
+            
+            // Catch exceptions when empty individuals result set is returned
+            // This is very likely to happen now since we don't have individual counts for each letter and always allow the result set to be filtered by any letter
+            if ( results == null ) {
+                console.log("Keine Filter vorhanden");
+                //do nothing
+            } else {
+                console.log("Irgendwelche Filter sind da");
+                if (results.filterFB != null) {
+                    $("#showFilterFB").val(results.filterFB);
+                    $("#saveFilterFB").val(results.filterFB);
                 }
-            });
-        }
+                if (results.filterRT != null) {
+                    $("#showFilterRT").val(results.filterRT);
+                    $("#saveFilterRT").val(results.filterRT);
+                }
+                if (results.filterMG != null) {
+                    $("#showFilterMG").val(results.filterMG);
+                    $("#saveFilterMG").val(results.filterMG);
+                }
+            }
+        });
     },
 
     // Load individuals for default class as specified by menupage template
@@ -185,9 +214,6 @@ var browseByVClass = {
     // Where all the magic happens -- gonna fetch me some individuals
     getIndividuals: function(vclassUri, alpha, page, scroll) {
         var url = this.dataServiceUrl + encodeURIComponent(vclassUri);
-
-        console.log("dataServiceUrl: " + this.dataServiceUrl);
-        console.log("vclassUri: " + vclassUri);
 
         if ( alpha && alpha != "all") {
             url += '&alpha=' + alpha;
@@ -210,7 +236,6 @@ var browseByVClass = {
                 $.scrollTo('#menupage-intro', 500);
             }
         }
-        console.log("url vor getJSON: " + url);
         
         $.getJSON(url, function(results) {
             var individualList = "";
@@ -237,6 +262,10 @@ var browseByVClass = {
                     var pages = results.pages;
                     browseByVClass.pagination(pages, page);
                 }
+
+                if (results.totalCount) {
+                    document.getElementById("class-counter").innerHTML = "(" + results.totalCount + ")";
+                }
             }
             
             // Set selected class, alpha and page
@@ -248,7 +277,9 @@ var browseByVClass = {
 
     getIndividualsWithFilters: function( alpha, page, scroll) {
         
+        // start the loading animation
         browseByVClass.ajaxStart();
+
         var filterRT = $('#savefilterRT').val();
         var filterFB = $('#savefilterFB').val();
         var filterMG = $('#savefilterMG').val();
@@ -264,36 +295,38 @@ var browseByVClass = {
         if ( page ) {
             url += '&page=' + page;
         }
-        if (filterRT) {
+        if ( filterRT ) {
             filter_set = true;
             url += '&filterRT=' + filterRT;
         }
-        if (filterFB) {
+        if ( filterFB ) {
             filter_set = true;
             url += '&filterFB=' + filterFB;
         }
-        if (filterMG) {
+        if ( filterMG ) {
             filter_set = true;
             url += '&filterMG=' + filterMG;
             var count = 0;
             
             if ($('#savefilterMG' + count).length)
                 filterMG = $('#savefilterMG' + count).val();
+                console.log("FilterMG" + count + " ist:" + filterMG);
+
                 while (filterMG != null){
                     if(filterMG != "") {
                         url += '&filterMG' + count + '=' + filterMG;
                     }
 
-                    if ($('#savefilterMG' + ++count).length){
+                    count = count + 1;
+                    if ($('#savefilterMG' + count).length){
                         filterMG = $('#savefilterMG' + count).val();
                     } else {
                         filterMG = null;
                     }
                 }
-            
         }
 
-        console.log("url vor Anfrage: " + url)
+        console.log("Url der Anfrage: " + url)
 
         // if there are active filters
         if (filter_set)
@@ -329,15 +362,14 @@ var browseByVClass = {
                 if (total_count) {
                     document.getElementById("class-counter").innerHTML = "(" + total_count + ")";
                 }
-
-                
-                console.log("Fertig mit Query");
                 
                 // Set selected class, alpha and page
                 // Do this whether or not there are any results
                 browseByVClass.selectedVClass(results.vclass.URI);
                 browseByVClass.selectedAlpha(alpha);
 
+                // stop the loading animation
+                console.log("Fertig mit Query");
                 browseByVClass.ajaxStop();
             });
         } else { // if no active filters then load de default

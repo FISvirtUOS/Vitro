@@ -22,6 +22,7 @@ import edu.cornell.mannlib.vitro.webapp.services.shortview.ShortViewServiceSetup
 // new uos filter stuff
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.ParameterizedSparqlString;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -77,10 +78,8 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 	 */
 	@Override
 	protected ObjectNode process() throws Exception {
-
-		vreq.getSession().setAttribute("A","test");
 		
-		log.info("In Process von GetRenderedSearchIndividualsByVClassAndFilter....");
+		log.info("Processing Query with Filters");
 		String filterRT = vreq.getParameter("filterRT");
 		String filterFB = vreq.getParameter("filterFB");
 		String filterMG = vreq.getParameter("filterMG");
@@ -126,32 +125,8 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 
 			long estimate = -1;
 
-			// String query_count = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-			// + "PREFIX vivo: <http://vivoweb.org/ontology/core#>"
-			// + "PREFIX kdsf: <http://kerndatensatz-forschung.de/owl/Basis#>"
-			// + "SELECT (COUNT(?Uri) AS ?count)"
-			// + "WHERE"
-			// + "{"
-			// + "?Uri a kdsf:Drittmittelprojekt ."
-			// + "?Uri rdfs:label ?label ."
-			// + "?Uri kdsf:hatOrganisationseinheit <https://fis.uos.de/vivouos/individual/fb01> ."
-			// + "}";	
-
-			
-
-				// Funktioniert für Fachbereich, Stand 19.11 (morgens)
-			// String query_string = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-			// + "PREFIX vivo: <http://vivoweb.org/ontology/core#>"
-			// + "PREFIX kdsf: <http://kerndatensatz-forschung.de/owl/Basis#>"
-			// + "SELECT ?Uri "
-			// + "WHERE"
-			// + "{"
-			// + "?Uri a kdsf:Drittmittelprojekt ."
-			// + "?Uri rdfs:label ?label ."
-			// + "?Uri kdsf:hatOrganisationseinheit <"+ filterFB + "> ."
-			// + "}"
-			// + "ORDER BY ASC(?label)";
-
+			ParameterizedSparqlString pss = new ParameterizedSparqlString();
+			ParameterizedSparqlString pss_count = new ParameterizedSparqlString();
 
 			String count_query_string = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 			+ "PREFIX vivo: <http://vivoweb.org/ontology/core#> "
@@ -171,14 +146,14 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 			+ "?Uri rdfs:label ?label . ";
 
 			if (filterFB != null) {
-				middle_query_string += "?Uri kdsf:hatOrganisationseinheit <"+ filterFB + "> . ";
+				middle_query_string += "?Uri kdsf:hatOrganisationseinheit ? . ";
 			}
 
 			if (filterMG != null) {
 				middle_query_string += " VALUES ?mittel {";
 				for (String filter : multiFilterMG) {
 					
-					middle_query_string += " <" + filter + "> ";	
+					middle_query_string += " ? ";	
 				}
 				middle_query_string += "} ?Uri 	kdsf:hatMittelgeber  ?mittel . ";
 			}
@@ -210,10 +185,35 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 			
 
 			count_query_string += middle_query_string;
+			query_string += middle_query_string;
 
-			log.info("Folgende Count-Query wird ausgeführt: " + count_query_string);
+			int offset = (page -1) * INDIVIDUALS_PER_PAGE;
+			query_string += " LIMIT " + INDIVIDUALS_PER_PAGE 
+						 + " OFFSET " + offset;
 
-			try (QueryExecution qexec = QueryExecutionFactory.create(count_query_string, fullModel)) {
+
+			
+
+			pss.setCommandText(query_string);
+			pss_count.setCommandText(count_query_string);
+
+			// neue query bauen
+			int count = 0;
+			if (filterFB != null) {
+				pss_count.setIri(count, filterFB);
+				pss.setIri(count++, filterFB);
+			}
+			if (filterMG != null) {
+				for (String filter : multiFilterMG) {
+					pss_count.setIri(count, filter);
+					pss.setIri(count++, filter);
+			}}
+			
+
+
+			log.info("Folgende Count-Query wird ausgeführt: " + pss_count.toString());
+
+			try (QueryExecution qexec = QueryExecutionFactory.create(pss_count.toString(), fullModel)) {
 				ResultSet results = qexec.execSelect();
 
 				log.info("Count Query wurde ausgeführt");
@@ -229,22 +229,10 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 			}
 
 
-			query_string += middle_query_string;
-
+			log.info("Folgende Query wird ausgeführt: " + pss.asQuery());
 			
-			int offset = (page -1) * INDIVIDUALS_PER_PAGE;
 
-			query_string += " LIMIT " + INDIVIDUALS_PER_PAGE 
-						 + " OFFSET " + offset;
-
-
-
-			log.info("Folgende Query wird ausgeführt: " + query_string);
-			
-			
-			Query filter_query = QueryFactory.create(query_string, Syntax.syntaxSPARQL_11);
-
-			try (QueryExecution qexec = QueryExecutionFactory.create(filter_query, fullModel)) {
+			try (QueryExecution qexec = QueryExecutionFactory.create(pss.toString(), fullModel)) {
 				ResultSet results = qexec.execSelect();
 
 				log.info("Query wurde ausgeführt");
