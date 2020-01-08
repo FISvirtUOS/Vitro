@@ -49,10 +49,8 @@
                 </select>
             </#if>
         </div>
-
-        <div class="row">
         
-            <div id="filter_container">
+            <div class="row" id="filter_container">
                 <#if projFundDonerDG?has_content>
                     <select id="filterMG" class="uos-select-style" onchange="setFilter(this);" name="ProjektMittelgeber">
                         <option selected value="">Mittelgeber</option>
@@ -64,9 +62,9 @@
                         </#list>        
                     </select>
                 </#if>
-        </div></div>
+        </div>
 
-        <div id="button_container">
+        <div class="row filter_button" id="button_container">
             <button type="button" id="applyFilterButton">Filter anwenden</button>
 
             <button type="button" onclick="cloneSelect()">MG Filter hinzufügen</button>

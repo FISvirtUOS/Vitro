@@ -115,6 +115,9 @@ var browseByVClass = {
             if (filterRT != "") {
                 $("#showfilterRT").text($('#filterRT option:selected').text());
                 $("#showfilterRT").show();
+            } else if ($("#showfilterRT").is(':visible')) {
+                $("#showfilterRT").text("");
+                $("#showfilterRT").hide();
             }
 
             var filterFB = $('#filterFB').val();
@@ -122,6 +125,9 @@ var browseByVClass = {
             if (filterFB != "") {
                 $("#showfilterFB").text($('#filterFB option:selected').text());
                 $("#showfilterFB").show();
+            } else if ($("#showfilterFB").is(':visible')) {
+                $("#showfilterFB").text("");
+                $("#showfilterFB").hide();
             }
 
             var filterMG = $("#filterMG").val();
@@ -129,6 +135,9 @@ var browseByVClass = {
             if (filterMG != "") {
                 $("#showfilterMG").text($('#filterMG option:selected').text());
                 $("#showfilterMG").show();
+            } else if ($("#showfilterMG").is(':visible')) {
+                $("#showfilterMG").text("");
+                $("#showfilterMG").hide();
             }
 
 
@@ -146,6 +155,10 @@ var browseByVClass = {
                         $("#savefilterMG" + count).val(filterMG);
                         $("#showfilterMG" + count).text($('#filterMG' + count + ' option:selected').text());
                         $("#showfilterMG" + count).show();
+                    } else if ($("#savefilterMG" + count).is(':visible')) {
+                        $("#savefilterMG" + count).val("");
+                        $("#savefilterMG" + count).text("");
+                        $("#savefilterMG" + count).hide();
                     }
                     
                     count = count + 1;
@@ -213,6 +226,9 @@ var browseByVClass = {
     
     // Where all the magic happens -- gonna fetch me some individuals
     getIndividuals: function(vclassUri, alpha, page, scroll) {
+        // start the loading animation
+        browseByVClass.ajaxStart();
+        
         var url = this.dataServiceUrl + encodeURIComponent(vclassUri);
 
         if ( alpha && alpha != "all") {
@@ -272,6 +288,9 @@ var browseByVClass = {
             // Do this whether or not there are any results
             browseByVClass.selectedVClass(results.vclass.URI);
             browseByVClass.selectedAlpha(alpha);
+
+            // remove loading screen
+            browseByVClass.ajaxStop();
         });
     },
 
@@ -374,6 +393,8 @@ var browseByVClass = {
             });
         } else { // if no active filters then load de default
             this.defaultVClass();
+
+            //browseByVClass.ajaxStop();
         }
     },
     
