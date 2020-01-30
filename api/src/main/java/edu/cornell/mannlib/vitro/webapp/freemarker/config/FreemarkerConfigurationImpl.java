@@ -311,6 +311,7 @@ public class FreemarkerConfigurationImpl extends Configuration {
 
 			urls.put("imprint", UrlBuilder.getUrl(Route.IMPRINT));
 			urls.put("privacypolicy", UrlBuilder.getUrl(Route.PRIVACY_POLICY));
+			urls.put("firststepsinvivo", UrlBuilder.getUrl(Route.FIRST_STEPS_IN_VIVO));
 
 			urls.put("themeImages", UrlBuilder.getUrl(themeDir + "/images"));
 			urls.put("images", UrlBuilder.getUrl("/images"));

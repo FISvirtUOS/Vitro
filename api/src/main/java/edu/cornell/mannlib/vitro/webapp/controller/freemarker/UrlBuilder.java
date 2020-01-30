@@ -46,7 +46,8 @@ public class UrlBuilder {
         VISUALIZATION_DATA("/visualizationData"),
         EDIT_REQUEST_DISPATCH("/editRequestDispatch"),
         IMPRINT("/imprint"),
-        PRIVACY_POLICY("/privacypolicy");
+        PRIVACY_POLICY("/privacypolicy"),
+        FIRST_STEPS_IN_VIVO("/firststepsinvivo");
 
 
 
