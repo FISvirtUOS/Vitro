@@ -9,11 +9,11 @@
 Im Laufe des akademischen Jahres 2019 werden diese Informationen sukzessive über am Stichtag 1.12.2018 laufende drittmittelfinanzierte Projekte ergänzt.</p>
     </section>
     
-    <#include "menupage-browse-projects.ftl">
+    <#include "menupage-browse.ftl">
     
     ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/css/menupage/menupage.css" />')}
     
-    <#include "menupage-projects-scripts.ftl">
+    <#include "menupage-scripts.ftl">
 <#else>
     ${noDataNotification}
 </#if>
