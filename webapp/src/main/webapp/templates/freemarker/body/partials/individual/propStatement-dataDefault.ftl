@@ -15,11 +15,9 @@
 <@showStatement statement property datatype />
 <#macro showStatement statement property datatype>
     <#assign theValue = statement.value />
-
     <#if datatype == "anyURI" && theValue?starts_with("http")>
 	<#assign theValue = "<a href=\"" + statement.value + "\" target=\"_blank\">" + statement.value + "</a>" />
     </#if>
-
     <#if theValue?contains("<ul>") >
         <#assign theValue = theValue?replace("<ul>","<ul class='tinyMCEDisc'>") />
     </#if>
