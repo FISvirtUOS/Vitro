@@ -266,7 +266,7 @@ SELECT ?date ?video
 WHERE
 {
 ?individualUri a vivo:Presentation .
-?individualUri uoscore:veranstaltungsdatum ?date .
-?individualUri uoscore:videovortrag ?video
+OPTIONAL { ?individualUri uoscore:veranstaltungsdatum ?date }
+OPTIONAL { ?individualUri uoscore:videovortrag ?video }
 }
     """ .
