@@ -9,11 +9,11 @@
         Unter Beachtung etwaiger Vertraulichkeitsregelungen wird Aufschluss gegeben über die institutionelle Verortung, den Titel, die Laufzeit, die Fördersumme, die Klassifizierung der Mittelgeber sowie über die jeweils erzielten Ergebnisse dieser drittmittelfinanzierten Projekte.</p>
     </section>
     
-    <#include "menupage-browse.ftl">
+    <#include "menupage-browse-projects.ftl">
     
     ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/css/menupage/menupage.css" />')}
     
-    <#include "menupage-scripts.ftl">
+    <#include "menupage-projects-scripts.ftl">
 <#else>
     ${noDataNotification}
 </#if>
