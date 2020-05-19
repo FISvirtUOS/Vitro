@@ -5,7 +5,7 @@
 <#if !noData>
     <section id="menupage-intro" role="region">
         <h2>${page.title}</h2>
-        <p>Derzeit werden mit Blick auf die landesseitigen Anforderungen zur Transparenz in der Forschung zunächst <b>nur Publikationen abgebildet, die als Forschungsergebnisse aus zum Stichtag 1.12.2015 laufenden und bis 31.12.2017 abgeschlossenen drittmittelfinanzierten Projekten hervorgegangen sind</b>. Im Zuge der Integrierung der am Stichtag 1.12.2018 laufenden drittmittelfinanzierten Projekten werden ggf. vorhandene Publikationen mit aufgenommen.</p>
+        <p>Derzeit werden mit Blick auf die landesseitigen Anforderungen zur Transparenz in der Forschung zunächst nur Publikationen abgebildet, die als Forschungsergebnisse aus zum Stichtag 1.12.2015 laufenden und bis 31.12.2018 abgeschlossenen drittmittelfinanzierten Projekten hervorgegangen sind. Die Projektveröffentlichungen werden sukzessive nachgepflegt und sollen zukünftig mit Hilfe einer Schnittstelle zur Universitätsbibliothek automatisiert eingebunden werden.</p>
     </section>
     
     <#include "menupage-browse.ftl">
