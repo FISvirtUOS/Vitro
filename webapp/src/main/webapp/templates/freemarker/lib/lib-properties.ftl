@@ -329,16 +329,27 @@ name will be used as the label. -->
 <#-- Check if project is still running or finished -->
 <#macro projectRuntime ProjectEndDateTime >
     <#assign aDateTime = .now>
-    <#if ProjectEndDateTime?has_content >
+    <#if ProjectEndDateTime?? >  
         <#list ProjectEndDateTime as someDateString>
-            <#if someDateString.end?datetime('iso') < aDateTime>
-                <span>${i18n().project_status}: ${i18n().project_finished}</span>
+            <#if (someDateString.end)?? >
+                <#if someDateString.end?datetime('iso') < aDateTime>
+                    <span>${i18n().project_status}: ${i18n().project_finished}</span>
+                    <br/>
+                <#else>
+                    <span>${i18n().project_status}: ${i18n().project_running}</span>
+                    <br/>
+                </#if>
             <#else>
-                <span>${i18n().project_status}: ${i18n().project_running}</span>
+                <#if (someDateString.start)??>
+                    <span>${i18n().project_status}: ${i18n().project_running}</span>
+                    <br/>
+                <#else>
+                    <span>Debug: end und start leer?</span>
+                </#if>
             </#if>
         </#list>
     <#else>
-        <span>${i18n().project_status}: ${i18n().project_running}</span>
+        <span>Debug: komplett leer?</span>
     </#if>
 </#macro>
 
