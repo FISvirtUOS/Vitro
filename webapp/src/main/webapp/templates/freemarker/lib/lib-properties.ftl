@@ -343,13 +343,9 @@ name will be used as the label. -->
                 <#if (someDateString.start)??>
                     <span>${i18n().project_status}: ${i18n().project_running}</span>
                     <br/>
-                <#else>
-                    <span>Debug: end und start leer?</span>
                 </#if>
             </#if>
         </#list>
-    <#else>
-        <span>Debug: komplett leer?</span>
     </#if>
 </#macro>
 
