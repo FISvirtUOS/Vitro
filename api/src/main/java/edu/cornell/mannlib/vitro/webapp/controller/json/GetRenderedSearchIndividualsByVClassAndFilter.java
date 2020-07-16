@@ -82,7 +82,7 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 		log.info("Processing Query with Filters");
 		String filterRT = vreq.getParameter("filterRT");
 		String filterFB = vreq.getParameter("filterFB");
-		String filterMG = vreq.getParameter("filterMG");
+		String filterMG = vreq.getParameter("filterMG0");
 		List<String> multiFilterMG = new ArrayList<String>();
 
 		String alpha = SearchQueryUtils.getAlphaParameter(vreq);
@@ -98,7 +98,7 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 			OntModel fullModel = vreq.getJenaOntModel();
 
 			if (filterMG != null) {
-				int counter = 0;
+				int counter = 1;
 				multiFilterMG.add(filterMG);
 				String tmp_filter  = vreq.getParameter("filterMG" + counter++);
 				while (tmp_filter != null) {
@@ -176,7 +176,11 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 
 			String alpha_regex = "";
 			if (alpha != null && (!alpha.equals("all"))) {
-				alpha_regex = "FILTER REGEX (?label, '^(" + alpha + "|" + alpha.toUpperCase() + ")') .";
+				if (alpha.equals("special")){
+					alpha_regex = "FILTER REGEX (?label, '^[^A-Za-z]') .";
+				} else {
+					alpha_regex = "FILTER REGEX (?label, '^(" + alpha + "|" + alpha.toUpperCase() + ")') .";
+				}
 			}
 
 			middle_query_string += alpha_regex 

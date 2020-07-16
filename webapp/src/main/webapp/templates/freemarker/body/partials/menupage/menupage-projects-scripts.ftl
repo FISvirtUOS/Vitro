@@ -34,6 +34,7 @@
         viewPageString: '${i18n().view_page}',
         ofTheResults: '${i18n().of_the_results}',
         thereAreNo: '${i18n().there_are_no}',
+        withTheseSelectedFilters : '${i18n().with_the_selected_filters}',
         indNamesStartWith: '${i18n().individuals_names_starting_with}',
         tryAnotherLetter: '${i18n().try_another_letter}',
         indsInSystem: '${i18n().individuals_in_system}',

@@ -1,6 +1,12 @@
 <#-- $This file is distributed under the terms of the license in LICENSE$ -->
 
 <#-- Template for browsing individuals in class groups for menupages -->
+<head>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+</head>
+
 
 <#import "lib-string.ftl" as str>
 <noscript>
@@ -29,8 +35,6 @@
         </ul>
         </div>
         
-
-        
         <div class="row">
             <select id="filterRT" class="uos-select-style" onchange="setFilter(this);" name="ProjektMittelgeber">
                 <option selected value="">Projektstatus</option>
@@ -50,11 +54,11 @@
             </#if>
         </div>
         
-            <div class="row" id="filter_container">
+            <div class="row container" id="filter_container">
                 <#if projFundDonerDG?has_content>
-                    <select id="filterMG" class="uos-select-style" onchange="setFilter(this);" name="ProjektMittelgeber">
-                        <option selected value="">Mittelgeber</option>
-
+                <h4>Mittelgeber</h4>
+                    <select id="filterMG" class="uos-select-style js-select2" multiple="" onchange="setMGFilter(this);" name="ProjektMittelgeber">
+                        
                         <#list projFundDonerDG as resultRow>
                         <#assign uri = resultRow["individualUri"] />
                         <#assign label = resultRow["name"]?replace("\n", " ") />
@@ -66,8 +70,6 @@
 
         <div class="row filter_button" id="button_container">
             <button type="button" id="applyFilterButton">Filter anwenden</button>
-
-            <button type="button" onclick="cloneSelect()">MG Filter hinzufügen</button>
 
             <button type="button" id="resetFilterButton" onclick="resetFilter()" style="display: none;" disabled>Reset Filter</button>
         </div>
@@ -91,6 +93,7 @@
             <#assign alphabet = ["A", "B", "C", "D", "E", "F", "G" "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] />
             <ul id="alpha-browse-individuals">
                 <li><a href="#" class="selected" data-alpha="all" title="${i18n().select_all}">${i18n().all}</a></li>
+                <li><a href="#" data-alpha="special" title="Sonderzeichen">#</a></li>
                 <#list alphabet as letter>
                     <li><a href="#" data-alpha="${letter?lower_case}" title="${i18n().browse_all_starts_with(letter)}">${letter}</a></li>
                 </#list>
@@ -110,30 +113,18 @@
 <script type="text/javascript">
     $('section#noJavascriptContainer').removeClass('hidden');
 
-    var selectionCounter = 0
-    function cloneSelect() {
-      var select = document.getElementById("filterMG");
-      var clone = select.cloneNode(true);
-      var name = select.getAttribute("name") + selectionCounter;
-      clone.id = select.getAttribute("id") + selectionCounter;
-      clone.setAttribute("name", name);
-      document.getElementById("filter_container").appendChild(clone);
-
-    var select = document.getElementById("savefilterMG");
-      var clone = select.cloneNode(true);
-      clone.id = select.getAttribute("id") + selectionCounter;
-      document.getElementById("save_filter_container").appendChild(clone);
-
-      var select = document.getElementById("showfilterMG");
-      var clone = select.cloneNode(true);
-      clone.id = select.getAttribute("id") + selectionCounter++;
-      clone.innerHTML = "";
-      document.getElementById("show_filter_container").appendChild(clone);
-      $("#" + clone.id).hide();
-    }
-
     function setFilter(el) {
         console.log("wird gerade ausgeaut ;)");
+    }
+
+    function setMGFilter(el) {
+        var brands = $('#filterMG option:selected');
+        var selected = [];
+        $(brands).each(function(index, brand){
+            selected.push([$(this).val()]);
+        });
+
+        console.log(selected);
     }
 
     function resetFilter() {

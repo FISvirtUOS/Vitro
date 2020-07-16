@@ -7,6 +7,15 @@ var browseByVClass = {
         this.initObjects();
         this.bindEventListeners();
         this.defaultVClass();
+
+        $(".js-select2").select2({
+			closeOnSelect : false,
+			placeholder : "Mittelgeber",
+			allowHtml: true,
+			allowClear: true,
+			tags: true
+        });
+
     },
     
     // Add variables from menupage template
@@ -130,46 +139,6 @@ var browseByVClass = {
                 $("#showfilterFB").hide();
             }
 
-            var filterMG = $("#filterMG").val();
-            $("#savefilterMG").val(filterMG);
-            if (filterMG != "") {
-                $("#showfilterMG").text($('#filterMG option:selected').text());
-                $("#showfilterMG").show();
-            } else if ($("#showfilterMG").is(':visible')) {
-                $("#showfilterMG").text("");
-                $("#showfilterMG").hide();
-            }
-
-
-            if (filterMG) {
-                var count = 0;
-                
-                if ($("#savefilterMG" + count).length) {
-                    filterMG = $("#filterMG" + count).val();
-                } else{
-                    filterMG = null;
-                }
-                
-                while (filterMG != null){
-                    if(filterMG != "") {
-                        $("#savefilterMG" + count).val(filterMG);
-                        $("#showfilterMG" + count).text($('#filterMG' + count + ' option:selected').text());
-                        $("#showfilterMG" + count).show();
-                    } else if ($("#savefilterMG" + count).is(':visible')) {
-                        $("#savefilterMG" + count).val("");
-                        $("#savefilterMG" + count).text("");
-                        $("#savefilterMG" + count).hide();
-                    }
-                    
-                    count = count + 1;
-                    if ($("#savefilterMG" + count).length) {
-                        filterMG = $("#filterMG" + count).val();
-                    } else{
-                        filterMG = null;
-                    }
-                }
-            }
-
             // do the magic Sparql Query stuff :P
             browseByVClass.getIndividualsWithFilters("all", 1, false);
 
@@ -259,7 +228,7 @@ var browseByVClass = {
             // Catch exceptions when empty individuals result set is returned
             // This is very likely to happen now since we don't have individual counts for each letter and always allow the result set to be filtered by any letter
             if ( results.individuals.length == 0 ) {
-                browseByVClass.emptyResultSet(results.vclass, alpha)
+                browseByVClass.emptyResultSet(results.vclass, alpha, false)
             } else {
                 var vclassName = results.vclass.name;
                 $.each(results.individuals, function(i, item) {
@@ -301,7 +270,16 @@ var browseByVClass = {
 
         var filterRT = $('#savefilterRT').val();
         var filterFB = $('#savefilterFB').val();
-        var filterMG = $('#savefilterMG').val();
+
+        var brands = $('#filterMG option:selected');
+        var filterMG = [];
+        $(brands).each(function(index, brand){
+            filterMG.push([$(this).val()]);
+        });
+        // var filterMG = $('#savefilterMG').val();
+
+
+        
         console.log("FilterRT: " + filterRT + "\n FilterFB: " + filterFB + "\n FilterMG: " + filterMG);
 
         var url = "/vivouos/dataservice?getRenderedSearchIndividualsByVClassAndFilter=1&vclassId=http%3A%2F%2Fkerndatensatz-forschung.de%2Fowl%2FBasis%23Drittmittelprojekt";
@@ -322,27 +300,31 @@ var browseByVClass = {
             filter_set = true;
             url += '&filterFB=' + filterFB;
         }
-        if ( filterMG ) {
+        if ( filterMG.length != 0 ) {
             filter_set = true;
-            url += '&filterMG=' + filterMG;
-            var count = 0;
+
+            filterMG.forEach(function(item, index, array) {
+                url += '&filterMG' + index + '=' + item;
+            });
+            // url += '&filterMG=' + filterMG;
+            // var count = 0;
             
-            if ($('#savefilterMG' + count).length)
-                filterMG = $('#savefilterMG' + count).val();
-                console.log("FilterMG" + count + " ist:" + filterMG);
+            // if ($('#savefilterMG' + count).length)
+            //     filterMG = $('#savefilterMG' + count).val();
+            //     console.log("FilterMG" + count + " ist:" + filterMG);
 
-                while (filterMG != null){
-                    if(filterMG != "") {
-                        url += '&filterMG' + count + '=' + filterMG;
-                    }
+            //     while (filterMG != null){
+            //         if(filterMG != "") {
+            //             url += '&filterMG' + count + '=' + filterMG;
+            //         }
 
-                    count = count + 1;
-                    if ($('#savefilterMG' + count).length){
-                        filterMG = $('#savefilterMG' + count).val();
-                    } else {
-                        filterMG = null;
-                    }
-                }
+            //         count = count + 1;
+            //         if ($('#savefilterMG' + count).length){
+            //             filterMG = $('#savefilterMG' + count).val();
+            //         } else {
+            //             filterMG = null;
+            //         }
+            //     }
         }
 
         console.log("Url der Anfrage: " + url)
@@ -356,7 +338,7 @@ var browseByVClass = {
                 // Catch exceptions when empty individuals result set is returned
                 // This is very likely to happen now since we don't have individual counts for each letter and always allow the result set to be filtered by any letter
                 if ( typeof results == 'undefined' || typeof results.individuals == 'undefined' || results.individuals.length == 0 ) {
-                    browseByVClass.emptyResultSet(results.vclass, alpha)
+                    browseByVClass.emptyResultSet(results.vclass, alpha, true)
                 } else {
                     var vclassName = results.vclass.name;
                     $.each(results.individuals, function(i, item) {
@@ -478,16 +460,25 @@ var browseByVClass = {
     },
     
     // When no individuals are returned for the AJAX request, print a reasonable message for the user
-    emptyResultSet: function(vclass, alpha) {
+    emptyResultSet: function(vclass, alpha, filter_bool) {
         var nothingToSeeHere;
         
         this.wipeSlate();
         var alpha = this.selectedAlpha(alpha);
         
-        if ( alpha != "all" ) {
-            nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + ' ' + browseByVClass.indNamesStartWith + ' <em>'+ alpha.toUpperCase() +'</em>.</p> <p class="no-individuals">' + browseByVClass.tryAnotherLetter + '</p>';
+        if (filter_bool)
+        {
+            if ( alpha != "all" ) {
+                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + browseByVClass.indNamesStartWith + ' (' + browseByVClass.withTheseSelectedFilters + ') ' + ' <em>'+ alpha.toUpperCase() +'</em>.</p> <p class="no-individuals">' + browseByVClass.tryAnotherLetter + '</p>';
+            } else {
+                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + browseByVClass.indsInSystem + ' (' + browseByVClass.withTheseSelectedFilters + ') ' + '</p>' ;
+            }
         } else {
-            nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + ' ' + browseByVClass.indsInSystem + '</p> <p class="no-individuals">' + browseByVClass.selectAnotherClass + '</p>';
+            if ( alpha != "all" ) {
+                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + ' ' + browseByVClass.indNamesStartWith + ' <em>'+ alpha.toUpperCase() +'</em>.</p> <p class="no-individuals">' + browseByVClass.tryAnotherLetter + '</p>';
+            } else {
+                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + ' ' + browseByVClass.indsInSystem + '</p> <p class="no-individuals">' + browseByVClass.selectAnotherClass + '</p>';
+            }
         }
 
         browseByVClass.individualsContainer.prepend(nothingToSeeHere);   
