@@ -52,20 +52,19 @@
                     </#list>        
                 </select>
             </#if>
-        </div>
         
-            <div class="row container" id="filter_container">
-                <#if projFundDonerDG?has_content>
-                <h4>Mittelgeber</h4>
-                    <select id="filterMG" class="uos-select-style js-select2" multiple="" onchange="setMGFilter(this);" name="ProjektMittelgeber">
-                        
-                        <#list projFundDonerDG as resultRow>
-                        <#assign uri = resultRow["individualUri"] />
-                        <#assign label = resultRow["name"]?replace("\n", " ") />
-                            <option value=${uri?url}><span>${label?html}</span></option>
-                        </#list>        
-                    </select>
-                </#if>
+            
+            <#if projFundDonerDG?has_content>
+                <select id="filterMG" class="uos-select-style js-select2" multiple="" onchange="setMGFilter(this);" name="ProjektMittelgeber">
+                    
+                    <#list projFundDonerDG as resultRow>
+                    <#assign uri = resultRow["individualUri"] />
+                    <#assign label = resultRow["name"]?replace("\n", " ") />
+                        <option value=${uri?url}><span>${label?html}</span></option>
+                    </#list>        
+                </select>
+            </#if>
+        
         </div>
 
         <div class="row filter_button" id="button_container">

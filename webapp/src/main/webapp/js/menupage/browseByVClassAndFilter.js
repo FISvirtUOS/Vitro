@@ -117,11 +117,13 @@ var browseByVClass = {
     filterListener: function() {
         $('#applyFilterButton').click(function() {
             console.log("Apply Filter wurde betätigt!"); 
+            var filter_set = false;
 
             //set filter in invisible field in Dom
             var filterRT = $('#filterRT').val();
             $("#savefilterRT").val(filterRT);
             if (filterRT != "") {
+                filter_set = true;
                 $("#showfilterRT").text($('#filterRT option:selected').text());
                 $("#showfilterRT").show();
             } else if ($("#showfilterRT").is(':visible')) {
@@ -132,6 +134,7 @@ var browseByVClass = {
             var filterFB = $('#filterFB').val();
             $("#savefilterFB").val(filterFB);
             if (filterFB != "") {
+                filter_set = true;
                 $("#showfilterFB").text($('#filterFB option:selected').text());
                 $("#showfilterFB").show();
             } else if ($("#showfilterFB").is(':visible')) {
@@ -139,9 +142,33 @@ var browseByVClass = {
                 $("#showfilterFB").hide();
             }
 
-            // do the magic Sparql Query stuff :P
-            browseByVClass.getIndividualsWithFilters("all", 1, false);
 
+            var filterMG = "";
+            var brands = $('#filterMG option:selected');
+            var selected = [];
+            $(brands).each(function(index, brand){
+                filterMG += ([$(this).text()]) + " / ";
+            });
+
+            if (filterMG != ""){
+                filter_set = true;
+                var filterText = filterMG.slice(0, -3)
+                $("#showfilterFB").text(filterText);
+                $("#showfilterFB").show();
+            }
+            
+
+            if (filter_set == true) {
+                console.log("Hole Individuen mit gesetzten Filtern");
+                // do the magic Sparql Query stuff :P
+                browseByVClass.getIndividualsWithFilters("all", 1, false);
+            } else {
+                console.log("Es sind keine Filter ausgewählt!");
+
+                var uri = $('#browse-classes li a.selected').attr('data-uri');
+                browseByVClass.getIndividuals(uri, "all", false);
+            }
+ 
             // activate/show reset filter button
             $("#resetFilterButton").prop('disabled', false);
             $("#resetFilterButton").show();
