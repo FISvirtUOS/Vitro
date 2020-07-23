@@ -139,10 +139,7 @@
         $("#showfilterFB").text("");
         $("#showfilterFB").hide();
 
-        $("#filterMG").val("");
-        $("#savefilterMG").val("");
-        $("#showfilterMG").text("");
-        $("#showfilterMG").hide();
+        $("#filterMG").val(null).trigger('change');
 
         var count = 0;
         while($("#savefilterMG" + count).length) {
@@ -154,8 +151,6 @@
         }
 
         selectionCounter = 0;
-
-        // ToDo reset Session vars
 
 
         $("#resetFilterButton").prop('disabled', true);
