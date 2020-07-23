@@ -122,6 +122,7 @@
     function resetFilter() {
         console.log("Reset Filter...");
 
+        // reset filters
         $("#filterRT").val("");
         $("#savefilterRT").val("");
 
@@ -129,17 +130,6 @@
         $("#savefilterFB").val("");
 
         $("#filterMG").val(null).trigger('change');
-
-        var count = 0;
-        while($("#savefilterMG" + count).length) {
-            
-            $("#filterMG" + count).remove();
-            $("#savefilterMG" + count).remove();
-            count = count + 1;
-        }
-
-        selectionCounter = 0;
-
 
         $("#resetFilterButton").prop('disabled', true);
         $("#resetFilterButton").removeAttr("style").hide();

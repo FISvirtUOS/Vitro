@@ -106,7 +106,6 @@ var browseByVClass = {
                 browseByVClass.getIndividualsWithFilters( alpha, page, false)
                 return false
             } else {
-               
                 browseByVClass.getIndividuals(uri, alpha, page);
                 return false;
             }
@@ -135,6 +134,7 @@ var browseByVClass = {
             // get the MG-filter
             var filterMG = "";
             var brands = $('#filterMG option:selected');
+            $("#savefilterMG").val(brands);
             var selected = [];
             $(brands).each(function(index, brand){
                 filterMG += ([$(this).text()]) + " / ";
@@ -288,7 +288,7 @@ var browseByVClass = {
         $(brands).each(function(index, brand){
             filterMG.push([$(this).val()]);
         });
-        // var filterMG = $('#savefilterMG').val();
+        
 
 
         
