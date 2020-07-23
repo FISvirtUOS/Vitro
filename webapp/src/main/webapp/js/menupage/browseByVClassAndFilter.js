@@ -124,25 +124,15 @@ var browseByVClass = {
             $("#savefilterRT").val(filterRT);
             if (filterRT != "") {
                 filter_set = true;
-                $("#showfilterRT").text($('#filterRT option:selected').text());
-                $("#showfilterRT").show();
-            } else if ($("#showfilterRT").is(':visible')) {
-                $("#showfilterRT").text("");
-                $("#showfilterRT").hide();
             }
 
             var filterFB = $('#filterFB').val();
             $("#savefilterFB").val(filterFB);
             if (filterFB != "") {
                 filter_set = true;
-                $("#showfilterFB").text($('#filterFB option:selected').text());
-                $("#showfilterFB").show();
-            } else if ($("#showfilterFB").is(':visible')) {
-                $("#showfilterFB").text("");
-                $("#showfilterFB").hide();
             }
 
-
+            // get the MG-filter
             var filterMG = "";
             var brands = $('#filterMG option:selected');
             var selected = [];
@@ -153,8 +143,6 @@ var browseByVClass = {
             if (filterMG != ""){
                 filter_set = true;
                 var filterText = filterMG.slice(0, -3)
-                $("#showfilterFB").text(filterText);
-                $("#showfilterFB").show();
             }
             
 
@@ -191,15 +179,12 @@ var browseByVClass = {
             } else {
                 console.log("Irgendwelche Filter sind da");
                 if (results.filterFB != null) {
-                    $("#showFilterFB").val(results.filterFB);
                     $("#saveFilterFB").val(results.filterFB);
                 }
                 if (results.filterRT != null) {
-                    $("#showFilterRT").val(results.filterRT);
                     $("#saveFilterRT").val(results.filterRT);
                 }
                 if (results.filterMG != null) {
-                    $("#showFilterMG").val(results.filterMG);
                     $("#saveFilterMG").val(results.filterMG);
                 }
             }

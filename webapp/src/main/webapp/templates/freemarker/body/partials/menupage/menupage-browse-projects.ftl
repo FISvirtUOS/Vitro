@@ -73,13 +73,6 @@
             <button type="button" id="resetFilterButton" onclick="resetFilter()" style="display: none;" disabled>Reset Filter</button>
         </div>
 
-        <#-- show "selected" filter -->
-        <div id="show_filter_container">
-            <p style="display: none;" class="show-filter" id="showfilterRT"></p>
-            <p style="display: none;" class="show-filter" id="showfilterFB"></p>
-            <p style="display: none;" class="show-filter" id="showfilterMG"></p>
-        </div>
-
         <#-- for saving the active filters -->
         <div id="save_filter_container" style="display: none;">
             <input style="display: none;" type="text" id="savefilterRT"/>
@@ -131,13 +124,9 @@
 
         $("#filterRT").val("");
         $("#savefilterRT").val("");
-        $("#showfilterRT").text("");
-        $("#showfilterRT").hide();
 
         $("#filterFB").val("");
         $("#savefilterFB").val("");
-        $("#showfilterFB").text("");
-        $("#showfilterFB").hide();
 
         $("#filterMG").val(null).trigger('change');
 
@@ -146,7 +135,6 @@
             
             $("#filterMG" + count).remove();
             $("#savefilterMG" + count).remove();
-            $("#showfilterMG" + count).remove();
             count = count + 1;
         }
 
