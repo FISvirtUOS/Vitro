@@ -82,6 +82,7 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 		log.info("Processing Query with Filters");
 		String filterRT = vreq.getParameter("filterRT");
 		String filterFB = vreq.getParameter("filterFB");
+		String filterFD = vreq.getParameter("filterFD");
 		String filterMG = vreq.getParameter("filterMG0");
 		List<String> multiFilterMG = new ArrayList<String>();
 
@@ -92,7 +93,7 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 
 		//TODO Übergabe der Werte sicher machen, SQL-Injection!!!!
 
-		if ((filterRT != null) || ( filterFB != null )
+		if ((filterRT != null) || ( filterFB != null ) || ( filterFD != null )
 			|| (filterMG != null )) {
 			
 			OntModel fullModel = vreq.getJenaOntModel();
@@ -115,13 +116,17 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 				vreq.getSession().setAttribute("filterFB", filterFB);
 				log.info("filterFB in Session gesetzt auf: " + filterFB);
 			}
+			if (filterFD != null) {
+				vreq.getSession().setAttribute("filterFD", filterFD);
+				log.info("filterFD in Session gesetzt auf: " + filterFD);
+			}
 			if (filterRT != null) {
 				vreq.getSession().setAttribute("filterRT", filterRT);
 				log.info("filterRT in Session gesetzt auf: " + filterRT);
 			}	
 
 			log.info("Filter werden angewenden!");
-			log.info("FilterFB: " + filterFB + "\n FilterRT: " + filterRT + "\n FilterMG: " + filterMG + "\n Page: " + page + "\n Alpha: " + alpha );
+			log.info("FilterFB: " + filterFB + "\n FilterFD: " + filterFD + "\n FilterRT: " + filterRT + "\n FilterMG: " + filterMG + "\n Page: " + page + "\n Alpha: " + alpha );
 
 			long estimate = -1;
 
@@ -147,6 +152,10 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 
 			if (filterFB != null) {
 				middle_query_string += "?Uri kdsf:hatOrganisationseinheit ? . ";
+			}
+
+			if (filterFD != null) {
+				middle_query_string += "?Uri kdsf:hatFach ? . ";
 			}
 
 			if (filterMG != null) {
@@ -206,6 +215,10 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 			if (filterFB != null) {
 				pss_count.setIri(count, filterFB);
 				pss.setIri(count++, filterFB);
+			}
+			if (filterFD != null) {
+				pss_count.setIri(count, filterFD);
+				pss.setIri(count++, filterFD);
 			}
 			if (filterMG != null) {
 				for (String filter : multiFilterMG) {
@@ -323,6 +336,13 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 		if(check != null) {
 			log.info("FilterFB aus Session geholt auf: " + check);
 			rObj.put("filterFB", check);
+		}
+
+		check = (String) vreq.getSession().getAttribute("filterFD");
+
+		if(check != null) {
+			log.info("FilterFD aus Session geholt auf: " + check);
+			rObj.put("filterFD", check);
 		}
 
 		check = (String) vreq.getSession().getAttribute("filterRT");

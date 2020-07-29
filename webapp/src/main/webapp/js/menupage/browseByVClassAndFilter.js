@@ -58,10 +58,11 @@ var browseByVClass = {
             // check if some filters are set
             var filterRT = $('#savefilterRT').val();
             var filterFB = $('#savefilterFB').val();
+            var filterFD = $('#savefilterFD').val();
             var filterMG = $('#savefilterMG').val();
 
             // if filters are set, get individuals with filters
-            if (filterRT || filterFB || filterMG) {
+            if (filterRT || filterFB || filterFD || filterMG) {
                 browseByVClass.getIndividualsWithFilters( alpha, 1, false)
                 return false
             } else { // else get all Drittmittel instances
@@ -96,13 +97,14 @@ var browseByVClass = {
         $('.pagination li a').click(function() {
             var filterRT = $('#savefilterRT').val();
             var filterFB = $('#savefilterFB').val();
+            var filterFD = $('#savefilterFD').val();
             var filterMG = $('#savefilterMG').val();
 
             var uri = $('#browse-classes li a.selected').attr('data-uri');
             var alpha = $('#alpha-browse-individuals li a.selected').attr('data-alpha');
             var page = $(this).attr('data-page');
 
-            if (filterRT || filterFB || filterMG) {
+            if (filterRT || filterFB || filterFD || filterMG) {
                 browseByVClass.getIndividualsWithFilters( alpha, page, false)
                 return false
             } else {
@@ -128,6 +130,12 @@ var browseByVClass = {
             var filterFB = $('#filterFB').val();
             $("#savefilterFB").val(filterFB);
             if (filterFB != "") {
+                filter_set = true;
+            }
+
+            var filterFD = $('#filterFD').val();
+            $("#savefilterFD").val(filterFD);
+            if (filterFD != "") {
                 filter_set = true;
             }
 
@@ -180,6 +188,9 @@ var browseByVClass = {
                 console.log("Irgendwelche Filter sind da");
                 if (results.filterFB != null) {
                     $("#saveFilterFB").val(results.filterFB);
+                }
+                if (results.filterFD != null) {
+                    $("#saveFilterFD").val(results.filterFD);
                 }
                 if (results.filterRT != null) {
                     $("#saveFilterRT").val(results.filterRT);
@@ -282,6 +293,7 @@ var browseByVClass = {
 
         var filterRT = $('#savefilterRT').val();
         var filterFB = $('#savefilterFB').val();
+        var filterFD = $('#savefilterFD').val();
 
         var brands = $('#filterMG option:selected');
         var filterMG = [];
@@ -292,7 +304,7 @@ var browseByVClass = {
 
 
         
-        console.log("FilterRT: " + filterRT + "\n FilterFB: " + filterFB + "\n FilterMG: " + filterMG);
+        console.log("FilterRT: " + filterRT + "\n FilterFB: " + filterFB  + "\n FilterFD: " + filterFD + "\n FilterMG: " + filterMG);
 
         var url = "/vivouos/dataservice?getRenderedSearchIndividualsByVClassAndFilter=1&vclassId=http%3A%2F%2Fkerndatensatz-forschung.de%2Fowl%2FBasis%23Drittmittelprojekt";
 
@@ -311,6 +323,10 @@ var browseByVClass = {
         if ( filterFB ) {
             filter_set = true;
             url += '&filterFB=' + filterFB;
+        }
+        if ( filterFD ) {
+            filter_set = true;
+            url += '&filterFD=' + filterFD;
         }
         if ( filterMG.length != 0 ) {
             filter_set = true;

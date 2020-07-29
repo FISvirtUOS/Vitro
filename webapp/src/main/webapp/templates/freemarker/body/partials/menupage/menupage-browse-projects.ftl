@@ -36,13 +36,13 @@
         </div>
         
         <div class="row">
-            <select id="filterRT" class="uos-select-style" onchange="setFilter(this);" name="ProjektMittelgeber">
+            <select id="filterRT" class="uos-select-style" onchange="setFilter(this);" name="Projektstatus">
                 <option selected value="">Projektstatus</option>
                 <option valuve="laufend"><span>laufend</span></option>
                 <option value="abgeschlossen"><span></span>abgeschlossen</option>
             </select>
             <#if projacademicDeptDG?has_content>
-                <select id="filterFB" class="uos-select-style" onchange="setFilter(this);" name="Projektstatus">
+                <select id="filterFB" class="uos-select-style" onchange="setFilter(this);" name="Filter Fachbereich">
                     <option selected value="">Fachbereich</option>
 
                     <#list projacademicDeptDG as resultRow>
@@ -53,6 +53,18 @@
                 </select>
             </#if>
         
+            
+            <#if projacademicFieldsDG?has_content>
+                <select id="filterFD" class="uos-select-style" onchange="setFilter(this);" name="Filter Fach">
+                    <option selected value="">Fach</option>
+
+                    <#list projacademicFieldsDG as resultRow>
+                    <#assign uri = resultRow["individualUri"] />
+                    <#assign label = resultRow["name"]?replace("\n", " ") />
+                        <option value=${uri?url}><span>${label?html}</span></option>
+                    </#list>        
+                </select>
+            </#if>
             
             <#if projFundDonerDG?has_content>
                 <select id="filterMG" class="uos-select-style js-select2" multiple="" onchange="setMGFilter(this);" name="ProjektMittelgeber">
@@ -77,6 +89,7 @@
         <div id="save_filter_container" style="display: none;">
             <input style="display: none;" type="text" id="savefilterRT"/>
             <input style="display: none;" type="text" id="savefilterFB"/>
+            <input style="display: none;" type="text" id="savefilterFD"/>
             <input style="display: none;" type="text" id="savefilterMG"/>
         </div>
         
@@ -128,6 +141,9 @@
 
         $("#filterFB").val("");
         $("#savefilterFB").val("");
+
+        $("#filterFD").val("");
+        $("#savefilterFD").val("");
 
         $("#filterMG").val(null).trigger('change');
 
