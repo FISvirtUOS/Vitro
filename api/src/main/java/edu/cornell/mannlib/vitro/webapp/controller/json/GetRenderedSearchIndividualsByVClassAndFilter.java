@@ -94,7 +94,7 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 		//TODO Übergabe der Werte sicher machen, SQL-Injection!!!!
 
 		if ((filterRT != null) || ( filterFB != null ) || ( filterFD != null )
-			|| (filterMG != null )) {
+			|| (filterMG != null ) || (alpha.equals("special"))) { // alpha workaround for sorting for special characters
 			
 			OntModel fullModel = vreq.getJenaOntModel();
 
@@ -313,7 +313,8 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 			
 		} else {
 			// ToDos entweder ohne Filter ausgeben oder leere Liste
-			//return IndividualListResults.EMPTY; 
+			//return IndividualListResults.EMPTY;
+			log.info("Doch keine Filter gesetzt, lade normale Klassenliste...");
 			return super.process();
 		}
 	}

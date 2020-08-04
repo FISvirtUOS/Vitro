@@ -55,6 +55,7 @@ var browseByVClass = {
             var uri = $('#browse-classes li a.selected').attr('data-uri');
             var alpha = $(this).attr('data-alpha');
 
+            console.log("Alpha click wurde betätigt mit: " + alpha);
             // check if some filters are set
             var filterRT = $('#savefilterRT').val();
             var filterFB = $('#savefilterFB').val();
@@ -62,7 +63,7 @@ var browseByVClass = {
             var filterMG = $('#savefilterMG').val();
 
             // if filters are set, get individuals with filters
-            if (filterRT || filterFB || filterFD || filterMG) {
+            if ( (filterRT || filterFB || filterFD || filterMG) || alpha == "special" ) {
                 browseByVClass.getIndividualsWithFilters( alpha, 1, false)
                 return false
             } else { // else get all Drittmittel instances
@@ -158,6 +159,10 @@ var browseByVClass = {
                 console.log("Hole Individuen mit gesetzten Filtern");
                 // do the magic Sparql Query stuff :P
                 browseByVClass.getIndividualsWithFilters("all", 1, false);
+
+                // activate/show reset filter button
+                $("#resetFilterButton").prop('disabled', false);
+                $("#resetFilterButton").show();
             } else {
                 console.log("Es sind keine Filter ausgewählt!");
 
@@ -165,9 +170,6 @@ var browseByVClass = {
                 browseByVClass.getIndividuals(uri, "all", false);
             }
  
-            // activate/show reset filter button
-            $("#resetFilterButton").prop('disabled', false);
-            $("#resetFilterButton").show();
         });
     },
     
@@ -312,6 +314,8 @@ var browseByVClass = {
 
         if ( alpha && alpha != "all") {
             url += '&alpha=' + alpha;
+
+            if (alpha == "special") filter_set = true; //workarount for alpha for sepcial characters
         }
         if ( page ) {
             url += '&page=' + page;
