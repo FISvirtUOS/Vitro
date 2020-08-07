@@ -36,13 +36,13 @@
         </div>
         
         <div class="row">
-            <select id="filterRT" class="uos-select-style" onchange="setFilter(this);" name="Projektstatus">
+            <select id="filterRT" class="uos-select-style" name="Projektstatus">
                 <option selected value="">Projektstatus</option>
                 <option valuve="laufend"><span>laufend</span></option>
                 <option value="abgeschlossen"><span></span>abgeschlossen</option>
             </select>
             <#if projacademicDeptDG?has_content>
-                <select id="filterFB" class="uos-select-style" onchange="setFilter(this);" name="Filter Fachbereich">
+                <select id="filterFB" class="uos-select-style" name="Filter Fachbereich">
                     <option selected value="">Fachbereich</option>
 
                     <#list projacademicDeptDG as resultRow>
@@ -55,7 +55,7 @@
         
             
             <#if projacademicFieldsDG?has_content>
-                <select id="filterFD" class="uos-select-style" onchange="setFilter(this);" name="Filter Fach">
+                <select id="filterFD" class="uos-select-style" name="Filter Fach">
                     <option selected value="">Fach</option>
 
                     <#list projacademicFieldsDG as resultRow>
@@ -67,7 +67,7 @@
             </#if>
             
             <#if projFundDonerDG?has_content>
-                <select id="filterMG" class="uos-select-style js-select2" multiple="" onchange="setMGFilter(this);" name="ProjektMittelgeber">
+                <select id="filterMG" class="uos-select-style js-select2" multiple="" name="ProjektMittelgeber">
                     
                     <#list projFundDonerDG as resultRow>
                     <#assign uri = resultRow["individualUri"] />
@@ -82,7 +82,7 @@
         <div class="row filter_button" id="button_container">
             <button type="button" id="applyFilterButton">Filter anwenden</button>
 
-            <button type="button" id="resetFilterButton" onclick="resetFilter()" style="display: none;" disabled>Reset Filter</button>
+            <button type="button" id="resetFilterButton" onclick="resetFilter()" style="display: none;" disabled>Filter zurücksetzen</button>
         </div>
 
         <#-- for saving the active filters -->
@@ -115,27 +115,13 @@
 </section>
 <div class="modal"><!-- Place at bottom of page --></div>
 </section>
+
 <script type="text/javascript">
     $('section#noJavascriptContainer').removeClass('hidden');
 
-    function setFilter(el) {
-        console.log("wird gerade ausgeaut ;)");
-    }
-
-    function setMGFilter(el) {
-        var brands = $('#filterMG option:selected');
-        var selected = [];
-        $(brands).each(function(index, brand){
-            selected.push([$(this).val()]);
-        });
-
-        console.log(selected);
-    }
-
+    // reset all filters
     function resetFilter() {
-        console.log("Reset Filter...");
-
-        // reset filters
+        
         $("#filterRT").val("");
         $("#savefilterRT").val("");
 
@@ -146,11 +132,13 @@
         $("#savefilterFD").val("");
 
         $("#filterMG").val(null).trigger('change');
+        $("#savefilterMG").val("");
 
         $("#resetFilterButton").prop('disabled', true);
         $("#resetFilterButton").removeAttr("style").hide();
     }
 
+    // reset all filters and load all third party founded projects
     $('#browse-classes li a').on('click', function(event) {
         resetFilter();
     });

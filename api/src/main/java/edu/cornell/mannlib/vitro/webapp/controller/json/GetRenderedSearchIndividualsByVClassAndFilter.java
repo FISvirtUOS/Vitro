@@ -79,7 +79,7 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 	@Override
 	protected ObjectNode process() throws Exception {
 		
-		log.info("Processing Query with Filters");
+		log.debug("Processing Query with Filters");
 		String filterRT = vreq.getParameter("filterRT");
 		String filterFB = vreq.getParameter("filterFB");
 		String filterFD = vreq.getParameter("filterFD");
@@ -110,23 +110,19 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 					tmp_filter  = vreq.getParameter("filterMG" + counter++);
 				}
 				vreq.getSession().setAttribute("filterMG", filterMG);
-				log.info("FilterMG in Session gesetzt auf: " + filterMG);
 			}
 			if (filterFB != null) {
 				vreq.getSession().setAttribute("filterFB", filterFB);
-				log.info("filterFB in Session gesetzt auf: " + filterFB);
 			}
 			if (filterFD != null) {
 				vreq.getSession().setAttribute("filterFD", filterFD);
-				log.info("filterFD in Session gesetzt auf: " + filterFD);
 			}
 			if (filterRT != null) {
 				vreq.getSession().setAttribute("filterRT", filterRT);
-				log.info("filterRT in Session gesetzt auf: " + filterRT);
 			}	
 
-			log.info("Filter werden angewenden!");
-			log.info("FilterFB: " + filterFB + "\n FilterFD: " + filterFD + "\n FilterRT: " + filterRT + "\n FilterMG: " + filterMG + "\n Page: " + page + "\n Alpha: " + alpha );
+			log.debug("Filter werden angewenden!");
+			log.debug("FilterFB: " + filterFB + "\n FilterFD: " + filterFD + "\n FilterRT: " + filterRT + "\n FilterMG: " + filterMG + "\n Page: " + page + "\n Alpha: " + alpha );
 
 			long estimate = -1;
 
@@ -227,32 +223,28 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 			}}
 			
 
-
-			log.info("Folgende Count-Query wird ausgeführt: " + pss_count.toString());
-
 			try (QueryExecution qexec = QueryExecutionFactory.create(pss_count.toString(), fullModel)) {
 				ResultSet results = qexec.execSelect();
 
-				log.info("Count Query wurde ausgeführt");
 				if (results.hasNext()) {
 					QuerySolution soln = results.nextSolution() ;
 					Literal literal = soln.getLiteral("count");
 					estimate = literal.getLong();
 
-					log.info("Count aus eigener Abfrage:" + estimate);
+					log.debug("Count aus eigener Abfrage:" + estimate);
 				} else {
-					log.info("Bei der Abfrage ist nichts rausgekommen");
+					log.debug("Bei der Abfrage ist nichts rausgekommen");
 				}
 			}
 
 
-			log.info("Folgende Query wird ausgeführt: " + pss.asQuery());
+			log.debug("Folgende Query wird ausgeführt: " + pss.asQuery());
 			
 
 			try (QueryExecution qexec = QueryExecutionFactory.create(pss.toString(), fullModel)) {
 				ResultSet results = qexec.execSelect();
 
-				log.info("Query wurde ausgeführt");
+				log.debug("Query wurde ausgeführt");
 				RDFNode node;
 				List<Individual> entities = new ArrayList<>();
 
@@ -276,10 +268,8 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 							//}
 						}
 					}
-					
-					//log.info("Result aus eigener Abfrage (Individuals): " + Arrays.toString(entities.toArray()));
 
-					log.info("Abfrage ergab Anzahl-Treffer: " + entities.size());vreq.getSession().setAttribute("test","hat geklappt");
+					log.debug("Abfrage ergab Anzahl-Treffer: " + entities.size());vreq.getSession().setAttribute("test","hat geklappt");
 
 
 					// Aus IndividualListController.java geklaut
@@ -299,7 +289,7 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 					return rObj;
 
 				} else {
-					log.info("Bei der Abfrage ist nichts rausgekommen, lade normale Klassenliste...");
+					log.debug("Bei der Abfrage ist nichts rausgekommen, lade normale Klassenliste...");
 
 					// return empty List with all required informations
 					ObjectNode rObj;
@@ -314,7 +304,7 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 		} else {
 			// ToDos entweder ohne Filter ausgeben oder leere Liste
 			//return IndividualListResults.EMPTY;
-			log.info("Doch keine Filter gesetzt, lade normale Klassenliste...");
+			log.debug("Doch keine Filter gesetzt, lade normale Klassenliste...");
 			return super.process();
 		}
 	}
@@ -322,39 +312,33 @@ public class GetRenderedSearchIndividualsByVClassAndFilter extends GetRenderedSe
 
 	public void getFilter(HttpServletResponse resp) {
 
-		log.info("Mal gucken ob Filter gesetzt wurden");
+		log.debug("Mal gucken ob Filter gesetzt wurden");
 		vreq.getSession().setAttribute("test","hat geklappt");
 		ObjectNode rObj = JsonNodeFactory.instance.objectNode();
 
-		// Test remove
-		String test = (String) vreq.getSession().getAttribute("test");
-		if(test != null) {
-			log.info("Session test hat geklappt: " + test);
-			rObj.put("test", test);
-		}
 		String check = (String) vreq.getSession().getAttribute("filterFB");
 
 		if(check != null) {
-			log.info("FilterFB aus Session geholt auf: " + check);
+			log.debug("FilterFB aus Session geholt auf: " + check);
 			rObj.put("filterFB", check);
 		}
 
 		check = (String) vreq.getSession().getAttribute("filterFD");
 
 		if(check != null) {
-			log.info("FilterFD aus Session geholt auf: " + check);
+			log.debug("FilterFD aus Session geholt auf: " + check);
 			rObj.put("filterFD", check);
 		}
 
 		check = (String) vreq.getSession().getAttribute("filterRT");
 		if(check != null) {
-			log.info("filterRT aus Session geholt auf: " + check);
+			log.debug("filterRT aus Session geholt auf: " + check);
 			rObj.put("filterRT", check);
 		}
 
 		check = (String) vreq.getSession().getAttribute("filterMG");
 		if(check != null) {
-			log.info("filterMG aus Session geholt auf: " + check);
+			log.debug("filterMG aus Session geholt auf: " + check);
 			rObj.put("filterMG", check);
 		}
 		

@@ -36,6 +36,8 @@
         thereAreNo: '${i18n().there_are_no}',
         withTheseSelectedFilters : '${i18n().with_the_selected_filters}',
         indNamesStartWith: '${i18n().individuals_names_starting_with}',
+        indNamesStartWithFilter: '${i18n().individuals_names_starting_with_filters}',
+        plsChangeSelection: '${i18n().pls_change_your_selection}',
         tryAnotherLetter: '${i18n().try_another_letter}',
         indsInSystem: '${i18n().individuals_in_system}',
         selectAnotherClass: '${i18n().select_another_class}'

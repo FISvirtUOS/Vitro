@@ -55,7 +55,6 @@ var browseByVClass = {
             var uri = $('#browse-classes li a.selected').attr('data-uri');
             var alpha = $(this).attr('data-alpha');
 
-            console.log("Alpha click wurde betätigt mit: " + alpha);
             // check if some filters are set
             var filterRT = $('#savefilterRT').val();
             var filterFB = $('#savefilterFB').val();
@@ -118,7 +117,6 @@ var browseByVClass = {
     // Listener for page filtering
     filterListener: function() {
         $('#applyFilterButton').click(function() {
-            console.log("Apply Filter wurde betätigt!"); 
             var filter_set = false;
 
             //set filter in invisible field in Dom
@@ -143,20 +141,21 @@ var browseByVClass = {
             // get the MG-filter
             var filterMG = "";
             var brands = $('#filterMG option:selected');
-            $("#savefilterMG").val(brands);
             var selected = [];
             $(brands).each(function(index, brand){
                 filterMG += ([$(this).text()]) + " / ";
             });
-
+            
             if (filterMG != ""){
                 filter_set = true;
-                var filterText = filterMG.slice(0, -3)
+                $("#savefilterMG").val(brands);
+                // var filterText = filterMG.slice(0, -3)
+            } else {
+                $("#savefilterMG").val("");
             }
             
 
             if (filter_set == true) {
-                console.log("Hole Individuen mit gesetzten Filtern");
                 // do the magic Sparql Query stuff :P
                 browseByVClass.getIndividualsWithFilters("all", 1, false);
 
@@ -164,7 +163,9 @@ var browseByVClass = {
                 $("#resetFilterButton").prop('disabled', false);
                 $("#resetFilterButton").show();
             } else {
-                console.log("Es sind keine Filter ausgewählt!");
+                // activate/show reset filter button
+                $("#resetFilterButton").prop('disabled', true);
+                $("#resetFilterButton").hide();
 
                 var uri = $('#browse-classes li a.selected').attr('data-uri');
                 browseByVClass.getIndividuals(uri, "all", false);
@@ -177,17 +178,14 @@ var browseByVClass = {
     // check for existing filters
     checkForFilter: function() {
         
-        console.log("Check ob Filter vorhanden sind");
         $.getJSON("/vivouos/dataservice?getFilterForRenderedSearchIndividualsByVClass=1", function(results) {
             var individualList = "";
             
             // Catch exceptions when empty individuals result set is returned
             // This is very likely to happen now since we don't have individual counts for each letter and always allow the result set to be filtered by any letter
             if ( results == null ) {
-                console.log("Keine Filter vorhanden");
                 //do nothing
             } else {
-                console.log("Irgendwelche Filter sind da");
                 if (results.filterFB != null) {
                     $("#saveFilterFB").val(results.filterFB);
                 }
@@ -302,11 +300,6 @@ var browseByVClass = {
         $(brands).each(function(index, brand){
             filterMG.push([$(this).val()]);
         });
-        
-
-
-        
-        console.log("FilterRT: " + filterRT + "\n FilterFB: " + filterFB  + "\n FilterFD: " + filterFD + "\n FilterMG: " + filterMG);
 
         var url = "/vivouos/dataservice?getRenderedSearchIndividualsByVClassAndFilter=1&vclassId=http%3A%2F%2Fkerndatensatz-forschung.de%2Fowl%2FBasis%23Drittmittelprojekt";
 
@@ -338,28 +331,7 @@ var browseByVClass = {
             filterMG.forEach(function(item, index, array) {
                 url += '&filterMG' + index + '=' + item;
             });
-            // url += '&filterMG=' + filterMG;
-            // var count = 0;
-            
-            // if ($('#savefilterMG' + count).length)
-            //     filterMG = $('#savefilterMG' + count).val();
-            //     console.log("FilterMG" + count + " ist:" + filterMG);
-
-            //     while (filterMG != null){
-            //         if(filterMG != "") {
-            //             url += '&filterMG' + count + '=' + filterMG;
-            //         }
-
-            //         count = count + 1;
-            //         if ($('#savefilterMG' + count).length){
-            //             filterMG = $('#savefilterMG' + count).val();
-            //         } else {
-            //             filterMG = null;
-            //         }
-            //     }
         }
-
-        console.log("Url der Anfrage: " + url)
 
         // if there are active filters
         if (filter_set)
@@ -402,7 +374,6 @@ var browseByVClass = {
                 browseByVClass.selectedAlpha(alpha);
 
                 // stop the loading animation
-                console.log("Fertig mit Query");
                 browseByVClass.ajaxStop();
             });
         } else { // if no active filters then load de default
@@ -501,9 +472,9 @@ var browseByVClass = {
         if (filter_bool)
         {
             if ( alpha != "all" ) {
-                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + browseByVClass.indNamesStartWith + ' (' + browseByVClass.withTheseSelectedFilters + ') ' + ' <em>'+ alpha.toUpperCase() +'</em>.</p> <p class="no-individuals">' + browseByVClass.tryAnotherLetter + '</p>';
+                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + browseByVClass.withTheseSelectedFilters + ' ' + browseByVClass.indNamesStartWithFilter + ' <em>'+ alpha.toUpperCase() +'</em>' + '.</p> <p class="no-individuals">' + browseByVClass.plsChangeSelection + '</p>';
             } else {
-                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + browseByVClass.indsInSystem + ' (' + browseByVClass.withTheseSelectedFilters + ') ' + '</p>' ;
+                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + browseByVClass.withTheseSelectedFilters + '.' + '</p> <p class="no-individuals">' + browseByVClass.plsChangeSelection + '</p>' ;
             }
         } else {
             if ( alpha != "all" ) {
