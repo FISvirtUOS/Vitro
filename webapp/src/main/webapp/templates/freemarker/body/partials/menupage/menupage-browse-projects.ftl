@@ -82,7 +82,7 @@
         <div class="row filter_button" id="button_container">
             <button type="button" id="applyFilterButton">Filter anwenden</button>
 
-            <button type="button" id="resetFilterButton" onclick="resetFilter()" style="display: none;" disabled>Filter zurücksetzen</button>
+            <button type="button" id="resetFilterButton" onclick="resetFilter()" style="float: right; display: none;" disabled>Filter zurücksetzen</button>
         </div>
 
         <#-- for saving the active filters -->

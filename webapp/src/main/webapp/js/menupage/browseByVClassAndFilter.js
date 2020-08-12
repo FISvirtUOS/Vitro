@@ -10,7 +10,7 @@ var browseByVClass = {
 
         $(".js-select2").select2({
 			closeOnSelect : false,
-			placeholder : "Mittelgeber",
+			placeholder : " Mittelgeber",
 			allowHtml: true,
 			allowClear: true,
 			tags: true
