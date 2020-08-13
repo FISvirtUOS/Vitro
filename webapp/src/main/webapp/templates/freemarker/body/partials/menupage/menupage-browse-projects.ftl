@@ -36,6 +36,10 @@
         </div>
         
         <div class="row">
+            <p class="filterDescription">Wählen Sie zum Filtern der Projekte einen Projektstatus und entweder einen Fachbereich oder ein Fach.</p>
+        </div>
+
+        <div class="row">
             <select id="filterRT" class="uos-select-style" name="Projektstatus">
                 <option selected value="">Projektstatus</option>
                 <option valuve="laufend"><span>laufend</span></option>
@@ -65,7 +69,11 @@
                     </#list>        
                 </select>
             </#if>
-            
+            </div>
+        <div class="row" style="margin-bottom: 10px;">
+            <p class="filterDescription">Zusätzlichen können Sie nach einem oder mehreren Mittelgebern filtern. Ihre Auswahl bestätigen Sie mit "Filter anwenden".</p>
+        </div>
+        <div class="row">
             <#if projFundDonerDG?has_content>
                 <select id="filterMG" class="uos-select-style js-select2" multiple="" name="ProjektMittelgeber">
                     
@@ -82,7 +90,7 @@
         <div class="row filter_button" id="button_container">
             <button type="button" id="applyFilterButton">Filter anwenden</button>
 
-            <button type="button" id="resetFilterButton" onclick="resetFilter()" style="float: right; display: none;" disabled>Filter zurücksetzen</button>
+            <button type="button" id="resetFilterButton" onclick="resetFilter()" style="display: none;" disabled>Filter zurücksetzen</button>
         </div>
 
         <#-- for saving the active filters -->
