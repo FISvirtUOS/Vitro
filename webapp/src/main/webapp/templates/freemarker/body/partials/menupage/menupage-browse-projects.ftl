@@ -36,7 +36,7 @@
         </div>
         
         <div class="row">
-            <p class="filterDescription">Wählen Sie zum Filtern der Projekte einen Projektstatus und entweder einen Fachbereich oder ein Fach.</p>
+            <p class="filterDescription">Wählen Sie zum Filtern der Projekte einen Projektstatus und entweder einen Fachbereich oder ein Fach aus.</p>
         </div>
 
         <div class="row">
