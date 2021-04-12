@@ -9,16 +9,12 @@
 <#if (objectTypesSize > 1)>
 	<#assign objectTypesExist = true />
 </#if>
-<#if objectTypes?contains(",")>
-	<#assign multipleTypes = true/>
-</#if>
 <#assign sparqlForAcFilter = "SELECT ?objectVar WHERE { ?objectVar a <http://kerndatensatz-forschung.de/owl/Basis#Drittmittelprojekt> .}" />
 <#assign editMode = "add" />
-<#assign propertyNameForDisplay = "Link zum Projekt" />
+<#assign propertyNameForDisplay = "${i18n().project_label}" />
 <#assign titleVerb = "${i18n().add_capitalized}" >
 <#assign objectLabel = "" />
 <#assign selectedObjectUri = ""/>
-<#assign submitButtonText = "${i18n().create_entry}" />
 <#assign objectExternalIDString = "object" + "${citation.externalId}" />
 
 <#--In order to fill out the subject-->

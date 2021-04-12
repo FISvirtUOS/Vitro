@@ -45,13 +45,11 @@ var customForm = {
 
         this.form = $('form#createAndLink');
         this.fullViewOnly = $('.fullViewOnly');
-        this.button = $('#submit');
         this.requiredLegend = $('#requiredLegend');
         this.typeSelector = this.form.find('select#typeSelector');
         this.typeSelectorInput = this.form.find('input#typeSelectorInput');
         this.typeSelectorSpan = this.form.find('span#typeSelectorSpan');
         this.or = $('span.or');
-        this.cancel = this.form.find('.cancel');
         this.acHelpTextClass = 'acSelectorWithHelpText';
         // this.verifyMatch is referenced in bindEventListeners to size and open
         // the verify popup window. Although there could be multiple verifyMatch objects
@@ -168,11 +166,9 @@ var customForm = {
 
         this.setType(); // empty any previous values (perhaps not needed)
         this.hideFields(this.fullViewOnly);
-        this.button.hide();
         this.or.hide();
         this.requiredLegend.hide();
 
-        this.cancel.unbind('click');
     },
 
     initFormFullView: function() {
@@ -181,7 +177,6 @@ var customForm = {
         this.fullViewOnly.show();
         this.or.show();
         this.requiredLegend.show();
-        this.button.show();
         this.setLabels();
 
         // Set the initial autocomplete help text in the acSelector fields.
@@ -189,23 +184,12 @@ var customForm = {
                 customForm.addAcHelpText($(this));
         });
 
-        this.cancel.unbind('click');
-        if (this.formSteps > 1) {
-            this.cancel.click(function() {
-                customForm.clearFormData(); // clear any input and validation errors
-                customForm.initFormTypeView();
-                customForm.clearAcSelections = true;
-                return false;
-            });
         // In one-step forms, if there is a type selection field, but no value is selected,
         // hide the acSelector field. The type selection must be made first so that the
         // autocomplete type can be determined. If a type selection has been made,
         // unhide the acSelector field.
-        } else if (this.typeSelector.length) {
+        if (this.typeSelector.length) {
             this.typeSelector.val() ? this.fullViewOnly.show() : this.hideFields(this.fullViewOnly);
-        }
-        if ( this.acSelectOnly ) {
-            this.disableSubmit();
         }
     },
 
@@ -373,8 +357,6 @@ var customForm = {
             $(this).data('baseText', $(this).html());
         });
 
-        this.button.data('baseText', this.button.val());
-
     },
     //get autocomplete filter with sparql query
     getAcFilter: function() {
@@ -530,10 +512,6 @@ var customForm = {
             customForm.undoAutocompleteSelection($acDiv);
         });
 
-        if ( this.acSelectOnly ) {
-        	//On initialization in this mode, submit button is disabled
-        	this.enableSubmit();
-        }
     },
 
     undoAutocompleteSelection: function(selectedObj) {
@@ -585,10 +563,6 @@ var customForm = {
         }
         customForm.addAcHelpText($acSelector);
 
-        //Resetting so disable submit button again for object property autocomplete
-        if ( this.acSelectOnly ) {
-        	this.disableSubmit();
-        }
         this.clearAcSelections = false;
     },
 
@@ -726,15 +700,6 @@ var customForm = {
     	    });
     	}
     },
-    disableSubmit: function() {
-		 //Disable submit button until selection made
-      this.button.attr('disabled', 'disabled');
-      this.button.addClass('disabledSubmit');
-	},
-	enableSubmit:function() {
-		this.button.removeAttr('disabled');
-		this.button.removeClass('disabledSubmit');
-	},
 	initDefaultBlankURI:function(selectedObj) {
 		//get uri input for selected object and set to value specified as "blank sentinel"
 		//If blank sentinel is neither null nor an empty string, this means if the user edits an
