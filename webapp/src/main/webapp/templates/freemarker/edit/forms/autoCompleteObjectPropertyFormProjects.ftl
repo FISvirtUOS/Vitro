@@ -12,36 +12,35 @@
 <#if objectTypes?contains(",")>
 	<#assign multipleTypes = true/>
 </#if>
-<#assign sparqlForAcFilter = "SELECT ?objectVar WHERE { ?objectVar .}" />
+<#assign sparqlForAcFilter = "SELECT ?objectVar WHERE { ?objectVar a <http://kerndatensatz-forschung.de/owl/Basis#Drittmittelprojekt> .}" />
 <#assign editMode = "add" />
 <#assign propertyNameForDisplay = "Link zum Projekt" />
 <#assign titleVerb = "${i18n().add_capitalized}" >
 <#assign objectLabel = "" />
 <#assign selectedObjectUri = ""/>
 <#assign submitButtonText = "${i18n().create_entry}" />
+<#assign objectExternalIDString = "object" + "${citation.externalId}" />
 
 <#--In order to fill out the subject-->
 <#assign acFilterForIndividuals =  "" />
-
-<p> Hallo ich bin ein Test, im richtigen Template (autoCompleteObjectPropertyFormProjects.ftl)</p>
 
         <input type="hidden" name="editKey" id="editKey" value="editkey_needs_to_be_set" role="input" />
         
 
         <#---This section should become autocomplete instead-->
         <p>
-			<label for="object"> ${propertyNameForDisplay?capitalize} ${i18n().name_capitalized}<span class='requiredHint'> *</span></label>
-			<input class="acSelector" size="50"  type="text" id="object" name="objectLabel" acGroupName="object" value="${objectLabel}" />
+			<label for="object"> ${i18n().project_name_capitalized}:</label>
+			<input class="acSelector" size="50"  type="text" id="object" name="objectLabel" acGroupName="object${citation.externalId}" value="${objectLabel}" />
 		</p>
 
-		<div class="acSelection" acGroupName="object" >
+		<div class="acSelection" acGroupName="object${citation.externalId}" >
 			<p class="inline">
 				<label>${i18n().selected}:</label>
 				<span class="acSelectionInfo"></span>
 				<a href="" class="verifyMatch"  title="${i18n().verify_this_match}">(${i18n().verify_this_match}</a> ${i18n().or}
-                <a href="#" class="changeSelection" id="changeSelection">${i18n().change_selection})</a>
+                <a href="#" class="changeSelection" id="changeSelection${citation.externalId}">${i18n().change_selection})</a>
             </p>
-            <input class="acUriReceiver" type="hidden" id="objectVar" name="objectVar" value="${selectedObjectUri}" />
+            <input class="acUriReceiver" type="hidden" id="objectVar${citation.externalId}" name="objectVar${citation.externalId}" value="${selectedObjectUri}" />
 		</div>
 
         <#--The above section should be autocomplete-->
@@ -59,7 +58,7 @@ Also multiple types parameter set to true only if more than one type returned-->
     var customFormData  = {
         acUrl: '${urls.base}/autocomplete?tokenize=true',
         <#if objectTypesExist = true>
-            acTypes: {object: '${objectTypes}'},
+            acTypes: {'${objectExternalIDString}': '${objectTypes}'},
         </#if>
         <#if multipleTypes = true>
             acMultipleTypes: 'true',
@@ -67,14 +66,14 @@ Also multiple types parameter set to true only if more than one type returned-->
         editMode: '${editMode}',
         typeName:'${propertyNameForDisplay}',
         acSelectOnly: 'true',
-        sparqlForAcFilter: '${sparqlForAcFilter}',
         sparqlQueryUrl: '${sparqlQueryUrl}',
+        sparqlForAcFilter: '${sparqlForAcFilter}',
         acFilterForIndividuals: '',
         defaultTypeName: '${propertyNameForDisplay}', // used in repair mode to generate button text
         baseHref: '${urls.base}/individual?uri='
     };
     var i18nStrings = {
-        selectAnExisting: '${i18n().select_an_existing}',
+        selectAnExisting: '${i18n().select_one}',
         orCreateNewOne: '${i18n().or_create_new_one}',
         selectedString: '${i18n().selected}'
     };

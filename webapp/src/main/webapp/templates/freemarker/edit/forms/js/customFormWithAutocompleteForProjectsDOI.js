@@ -57,7 +57,7 @@ var customForm = {
         // the verify popup window. Although there could be multiple verifyMatch objects
         // selecting one and binding the event works for all of them
         this.verifyMatch = this.form.find('.verifyMatch');
-        this.defaultAcType = ""; // will be set in setType() first time through
+        this.defaultAcType = "http://kerndatensatz-forschung.de/owl/Basis#Drittmittelprojekt"; // will be set in setType() first time through
         this.templateDefinedAcTypes = false;
         if ( this.acTypes != undefined ) {
             this.templateDefinedAcTypes = true;
@@ -313,6 +313,9 @@ var customForm = {
                     return;
                 }
                 // console.log('not getting term from cache');
+                console.log("check acType: " + $(selectedObj).attr('acGroupName'));
+                console.log("acType in array: " + customForm.acTypes[$(selectedObj).attr('acGroupName')]);
+                console.log("acType array: " + customForm.acTypes);
                 $.ajax({
                     url: customForm.acUrl,
                     dataType: 'json',
@@ -377,7 +380,7 @@ var customForm = {
     getAcFilter: function() {
 
         if (!this.sparqlForAcFilter) {
-            //console.log('autocomplete filtering turned off');
+            console.log('autocomplete filtering turned off');
             this.acFilter = null;
             return;
         }
@@ -412,18 +415,18 @@ var customForm = {
         var filteredResults;
 
         if (!this.acFilter || !this.acFilter.length) {
-            //console.log('no autocomplete filtering applied');
+            console.log('no autocomplete filtering applied');
             return results;
         }
 
         filteredResults = [];
         $.each(results, function() {
             if ($.inArray(this.uri, customForm.acFilter) == -1) {
-                //console.log('adding ' + this.label + ' to filtered results');
-                filteredResults.push(this);
+                console.log('filtering out ' + this.label);
             }
             else {
-                //console.log('filtering out ' + this.label);
+                console.log('adding ' + this.label + ' to filtered results');
+                filteredResults.push(this);
             }
         });
         return filteredResults;
