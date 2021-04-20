@@ -116,7 +116,7 @@
 }
 .searchTOC ul li {
     border-bottom: 1px solid #dde4e3;
-    display: block;
+    display: inline-block;
     font-size: 14px;
     margin-left: 15px;
     padding-top: .5em;
