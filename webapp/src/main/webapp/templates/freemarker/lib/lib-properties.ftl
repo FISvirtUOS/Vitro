@@ -312,7 +312,7 @@ name will be used as the label. -->
     	</#if>
 
         <span class="inline">
-            <a class="add-label" href="${labelLink}"
+            <a class="add-label" href="${labelLink}" style="background: initial; padding-left: initial;"
              title="${linkTitle}">
         	<img class="add-individual" src="${urls.images}/individual/manage-icon.png" alt="${imageAlt}" /></a>
         </span>
