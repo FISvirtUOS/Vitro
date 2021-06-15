@@ -333,15 +333,15 @@ name will be used as the label. -->
         <#list ProjectEndDateTime as someDateString>
             <#if (someDateString.end)?? >
                 <#if someDateString.end?datetime('iso') < aDateTime>
-                    <span>${i18n().project_status}: ${i18n().project_finished}</span>
+                    <span class="uos-project-runtime">${i18n().project_status}: ${i18n().project_finished}</span>
                     <br/>
                 <#else>
-                    <span>${i18n().project_status}: ${i18n().project_running}</span>
+                    <span class="uos-project-runtime">${i18n().project_status}: ${i18n().project_running}</span>
                     <br/>
                 </#if>
             <#else>
                 <#if (someDateString.start)??>
-                    <span>${i18n().project_status}: ${i18n().project_running}</span>
+                    <span class="uos-project-runtime">${i18n().project_status}: ${i18n().project_running}</span>
                     <br/>
                 </#if>
             </#if>
