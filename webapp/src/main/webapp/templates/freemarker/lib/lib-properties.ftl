@@ -322,7 +322,7 @@ name will be used as the label. -->
 <#-- Most specific types -->
 <#macro mostSpecificTypes individual >
     <#list individual.mostSpecificTypes as type>
-        <span>${type}</span>
+        <span class="display-title">${type}</span>
     </#list>
 </#macro>
 
