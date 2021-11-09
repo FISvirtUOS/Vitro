@@ -162,14 +162,14 @@
             <#if precision?ends_with("yearPrecision")>yyyy
             <#elseif precision?ends_with("yearMonthPrecision")>MMMM yyyy
             <#elseif precision?ends_with("monthPrecision")>MMMM
-            <#elseif precision?ends_with("yearMonthDayPrecision")>MMMM d, yyyy
-            <#else>MMMM d, yyyy h:mm a
+            <#elseif precision?ends_with("yearMonthDayPrecision")>d MMMM yyyy
+            <#else> d MMMM yyyy h:mm a
             </#if>
         <#else> <#-- formatType == "short" -->
             <#if precision?ends_with("yearPrecision")>yyyy
             <#elseif precision?ends_with("yearMonthPrecision")>M/yyyy
-            <#elseif precision?ends_with("yearMonthDayPrecision")>M/d/yyyy
-            <#else>M/d/yyyy h:mm a
+            <#elseif precision?ends_with("yearMonthDayPrecision")>d.M.yyyy
+            <#else>d.M.yyyy h:mm a
             </#if>
         </#if>
     </#local>

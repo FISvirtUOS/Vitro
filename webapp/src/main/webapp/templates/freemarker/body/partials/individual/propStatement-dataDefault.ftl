@@ -29,19 +29,19 @@
     </#if>
 	<#if theValue?matches("([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})") >
 		<#assign theValue = theValue + "T00:00:00" />
-		${dt.formatXsdDateTimeLong(theValue, "yearMonthDayPrecision")}
+		${dt.formatXsdDateTimeShort(theValue, "yearMonthDayPrecision")}
 	<#elseif theValue?matches("^([0-9]{4})-((0[1-9])|(1[0-2]))-((0[1-9])|([1-2][0-9])|(3[0-1]))(T|\\s)(([0-1][0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])")>
 		<#if theValue?contains("T00:00:00") >
-			${dt.formatXsdDateTimeLong(theValue, "yearMonthDayPrecision")}
+			${dt.formatXsdDateTimeShort(theValue, "yearMonthDayPrecision")}
 		<#else>
-			${dt.formatXsdDateTimeLong(theValue, "yearMonthDayTimePrecision")}
+			${dt.formatXsdDateTimeShort(theValue, "yearMonthDayTimePrecision")}
 		</#if>
 	<#elseif theValue?matches("^([0-9]{4})-(0[1-9]|1[012])")>
 		<#assign theValue = theValue + "-01T00:00:00" />
-		${dt.formatXsdDateTimeLong(theValue, "yearMonthPrecision")}
+		${dt.formatXsdDateTimeShort(theValue, "yearMonthPrecision")}
 	<#elseif theValue?matches("^--(0[1-9]|1[012])")>
 		<#assign theValue = "2000" + theValue?substring(1) + "-01T00:00:00" />
-		${dt.formatXsdDateTimeLong(theValue, "monthPrecision")}
+		${dt.formatXsdDateTimeShort(theValue, "monthPrecision")}
 	<#else>
     	${theValue} <#if !datatype?contains("none")> <@validateFormat theValue datatype/> </#if>
 	</#if>
