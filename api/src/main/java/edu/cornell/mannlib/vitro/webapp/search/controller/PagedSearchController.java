@@ -475,7 +475,7 @@ public class PagedSearchController extends FreemarkerHttpServlet {
     private SearchQuery getQuery(String queryText, int hitsPerPage, int startIndex, VitroRequest vreq) {
         // Lowercase the search term to support wildcard searches: The search engine applies no text
         // processing to a wildcard search term.
-        SearchQuery query = ApplicationUtils.instance().getSearchEngine().createQuery(queryText);
+        SearchQuery query = ApplicationUtils.instance().getSearchEngine().createQuery("*" + queryText + "*");
 
         query.setStart( startIndex )
              .setRows(hitsPerPage);
