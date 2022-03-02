@@ -27,12 +27,18 @@
         <input type="text" name="webuseremail"  value="${webuseremail!}"/>
 
         <label for="websubject">${i18n().mail_subject} <span class="requiredHint"> *</span></label>
-        <input type="text" name="websubject"  value="${websubject!}"/>
+        
+        <#if report_link_message?has_content>
+            <input type="text" name="websubject"  value="${i18n().report_broken_link}"/>
 
+            <label>${i18n().comments_questions} <span class="requiredHint"> *</span></label>
+            <textarea name="s34gfd88p9x1" rows="10" cols="90">${report_link_message}</textarea>
+        <#else>
+            <input type="text" name="websubject"  value="${i18n().mail_subject}"/>
 
-        <label>${i18n().comments_questions} <span class="requiredHint"> *</span></label>
-        <textarea name="s34gfd88p9x1" rows="10" cols="90">${comments!}</textarea>
-
+            <label>${i18n().comments_questions} <span class="requiredHint"> *</span></label>
+            <textarea name="s34gfd88p9x1" rows="10" cols="90">${comments!}</textarea>
+        </#if>
 
     	<p><label class="realpersonLabel">${i18n().enter_in_security_field}:<span class="requiredHint"> *</span></label>
 

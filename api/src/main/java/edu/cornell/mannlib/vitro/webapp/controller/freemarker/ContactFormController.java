@@ -68,6 +68,16 @@ public class ContactFormController extends FreemarkerHttpServlet {
                 vreq.getSession().setAttribute("contactFormReferer",vreq.getHeader("Referer"));
             }
 
+
+            if (vreq.getParameter("broken_link") != null) {
+                if (vreq.getParameter("profile") != null) {
+                    String message = String.format(I18n.text(vreq, "report_link_with_profile"), vreq.getParameter("profile"), vreq.getParameter("broken_link"));
+                    body.put("report_link_message", message);
+                } else {
+                    String message = String.format(I18n.text(vreq, "report_link"), vreq.getParameter("broken_link"));
+                    body.put("report_link_message", message);
+                }
+            }
             templateName = TEMPLATE_DEFAULT;
         }
 
