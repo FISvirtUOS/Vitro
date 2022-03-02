@@ -22,7 +22,7 @@
     <li>Phrase searches may be combined with Boolean operators -- e.g. "<i>climate change</i>" OR "<i>global warming</i>".</li>
     <li>Close word variations will also be found -- e.g., <i>sequence</i> matches <i>sequences</i> and <i>sequencing</i>.</li>
     <li>Use the wildcard * character to match an even wider variation -- e.g., <i>nano*</i> will match both <i>nanotechnology</i> and <i>nanofabrication</i>.</li>
-    <li>Search uses shortened versions of words -- e.g., a search for <i>cogniti*</i> finds nothing, while <i>cognit*</i> finds both <i>cognitive</i> and <i>cognition</i>.</li>
+    <li>Search uses shortened versions of words -- e.g., a search for <i>cogniti*</i> finds nothing, while <i>cognit*</i> finds both <i>cognitive</i> and <i>cognition</i>. (for VIVO@UOS standard - can be suppressed with "Search text")</li>
 </ul>
 <a id="closeLink" href="#"  style="visibility:hidden;font-size:.825em;padding-left:8px">Close</a>
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/css/search.css" />')}
