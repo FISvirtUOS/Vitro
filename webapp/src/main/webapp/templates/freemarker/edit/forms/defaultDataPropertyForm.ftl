@@ -63,7 +63,7 @@
         <#include "dateTimeEntryForm.ftl">
 
     <#else>
-        <input type="text" size="70" id="literal" name="literal" value="${literalValues}" />
+        <input type="text" size="70" id="literal" name="literal" value="${literalValues?html}" />
 
     </#if>
 
