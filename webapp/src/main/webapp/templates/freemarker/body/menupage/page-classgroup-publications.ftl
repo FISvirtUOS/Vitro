@@ -3,11 +3,11 @@
 <#include "menupage-checkForData.ftl">
 
 <#if !noData>
-    <section id="menupage-intro" role="region">
+    <section id="menupage-intro" class="uos_style" role="region">
         <h2>${page.title}</h2>
         <p>Derzeit werden mit Blick auf die landesseitigen Anforderungen zur Transparenz in der Forschung zunächst nur Publikationen abgebildet, die als Forschungsergebnisse aus zum Stichtag 1.12.2015 laufenden und bis 31.12.2018 abgeschlossenen drittmittelfinanzierten Projekten hervorgegangen sind. Die Projektveröffentlichungen werden sukzessive nachgepflegt und sollen zukünftig mit Hilfe einer Schnittstelle zur Universitätsbibliothek automatisiert eingebunden werden.</p>
+        <a href="https://osnascholar.ub.uni-osnabrueck.de/" title="Hochschulbibliographie (Externer Link - öffnet in neuem Fenster" target="_blank" class="external-link">Hochschulbibliographie</a>
     </section>
-    
     <#include "menupage-browse.ftl">
     
     ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/css/menupage/menupage.css" />')}
