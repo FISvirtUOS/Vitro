@@ -429,6 +429,7 @@ public class PagedSearchController extends FreemarkerHttpServlet {
             add("Forschungsprojekt");
             add("Abteilung");
             add("Organisation");
+            add("Mitglied des Lehrkörpers");
         }};
         for (VClass vc : classes) {                        
             if (!check_classes.contains(vc.getName()) && !unwanted_classes.contains(vc.getName())) { // only add them once (aequivalent classes)
