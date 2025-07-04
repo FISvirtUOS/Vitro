@@ -17,10 +17,10 @@
 <p> Competent regulatory authority: Lower Saxony Ministry of Science and Culture, Leibnizufer 9, D-30169 Hannover</p>
 <p> Value-added tax identification number in accordance with § 27a of the Value Added Tax Act: DE 154 285 400</p>
 <p> Responsible according to § 55 para 2 RStV: <br />
-	Stabsstelle Zentrales Berichtswesen<br />
+	Stabsstelle Strategisches Controlling<br />
 	<a href="mailto:fis@uni-osnabrueck.de" title="Send E-Mail" class="mail">fis@uni-osnabrueck.de</a><br />
 <p>Technical Implementation<br />
-	Zentrum für Digitale Lehre, Campus-Management und Hochschuldidaktik (virtUOS)<br /></p>
+	Rechenzentrum Universität Osnabrück<br /></p>
 
 	<p> <strong>Exemption from liability <br /></strong>Those responsible at Osnabrück University have compiled the information contained on this website with the greatest of care. Nevertheless, Osnabrück University cannot assume any liability for the topicality, correctness, completeness or quality of the information and data provided.
 </p>
