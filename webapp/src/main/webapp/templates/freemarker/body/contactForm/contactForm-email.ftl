@@ -21,7 +21,9 @@
             <#if referrer??>
                 <em>${i18n().viewing_page}: ${referrer}</em>
             </#if>
-        </p>
+        </p>  
+        
+        <p><strong>${i18n().mail_subject}:</strong> ${websubject}</p>
 
         <p><strong>${i18n().comments}:</strong> ${comments}</p>
     </body>

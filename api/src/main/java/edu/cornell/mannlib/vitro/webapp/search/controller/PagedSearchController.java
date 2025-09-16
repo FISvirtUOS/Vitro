@@ -448,7 +448,10 @@ public class PagedSearchController extends FreemarkerHttpServlet {
         // processing to a wildcard search term.
         if (StringUtils.isBlank(queryText)) {
             queryText = "*:*";
+        } else {
+            queryText = "*" + queryText + "*";
         }
+
         SearchQuery query = ApplicationUtils.instance().getSearchEngine().createQuery(queryText);
 
         query.setStart(startIndex).setRows(hitsPerPage);

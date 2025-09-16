@@ -44,7 +44,12 @@ public class UrlBuilder {
         VISUALIZATION_SHORT("/vis"),
         VISUALIZATION_AJAX("/visualizationAjax"),
         VISUALIZATION_DATA("/visualizationData"),
-        EDIT_REQUEST_DISPATCH("/editRequestDispatch");
+        EDIT_REQUEST_DISPATCH("/editRequestDispatch"),
+        IMPRINT("/imprint"),
+        PRIVACY_POLICY("/privacypolicy"),
+        FIRST_STEPS_IN_VIVO("/firststepsinvivo");
+
+
 
         private final String path;
 

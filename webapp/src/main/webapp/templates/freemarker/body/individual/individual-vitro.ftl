@@ -52,6 +52,7 @@
                     <#if editable>
                         <@p.deleteIndividualLink individual />
                     </#if>
+                    <br/>
                     <#--  Most-specific types -->
                     <@p.mostSpecificTypes individual />
                     <span id="iconControlsVitro"><img id="uriIcon" title="${individual.uri}" class="middle" src="${urls.images}/individual/uriIcon.gif" alt="uri icon"/></span>

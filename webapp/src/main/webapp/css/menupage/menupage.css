@@ -163,7 +163,7 @@ ul#find-filters a {
 ul#browse-classes {
     float: left;
     width: 255px;
-    margin-left: 15px;
+    margin-left: 10px;
     margin-bottom: 20px;
     margin-top: 10px;
 }
@@ -219,9 +219,6 @@ nav#alpha-browse-container {
     margin-bottom: 30px;
     margin-right: 17px;
     min-height: 170px;
-}
-h3.selected-class {
-    padding: .8em 0 0 0;
 }
 #individuals-in-class ul {
     list-style: none;

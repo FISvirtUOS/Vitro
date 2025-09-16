@@ -29,6 +29,7 @@ import edu.cornell.mannlib.vitro.webapp.dao.WebappDaoFactory;
 import edu.cornell.mannlib.vitro.webapp.modules.tboxreasoner.TBoxReasonerStatus;
 import edu.cornell.mannlib.vitro.webapp.search.controller.IndexController;
 import edu.cornell.mannlib.vitro.webapp.startup.StartupStatus;
+import edu.cornell.mannlib.vitro.webapp.i18n.I18n;
 
 public class BaseSiteAdminController extends FreemarkerHttpServlet {
 
@@ -90,7 +91,7 @@ public class BaseSiteAdminController extends FreemarkerHttpServlet {
 
 	@Override
 	public String getTitle(String siteName, VitroRequest vreq) {
-        return siteName + " Site Administration";
+        return siteName + " " + I18n.text(vreq,"identity_admin");
 	}
 
     @Override

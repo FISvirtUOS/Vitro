@@ -1,6 +1,6 @@
 /* $This file is distributed under the terms of the license in LICENSE$ */
 
-package edu.cornell.mannlib.vitro.webapp.controller.freemarker;
+package edu.cornell.mannlib.vitro.webapp.controller.freemarker; 
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,27 +16,25 @@ import edu.cornell.mannlib.vitro.webapp.i18n.I18n;
 
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet(name = "AboutController", urlPatterns = {"/about"} )
-public class AboutController extends FreemarkerHttpServlet {
-
+@WebServlet(name = "PrivacyPolicyController", urlPatterns = {"/privacypolicy"} )
+public class PrivacyPolicyController extends FreemarkerHttpServlet {
+	
     private static final long serialVersionUID = 1L;
-    private static final Log log = LogFactory.getLog(AboutController.class);
-    private static final String TEMPLATE_DEFAULT = "about.ftl";
-
+    private static final Log log = LogFactory.getLog(PrivacyPolicyController.class);
+    private static final String TEMPLATE_DEFAULT = "privacypolicy.ftl";
+    
     @Override
     protected ResponseValues processRequest(VitroRequest vreq) {
         ApplicationBean application = vreq.getAppBean();
-
+        
         Map<String, Object> body = new HashMap<String, Object>();
-        body.put("aboutText", application.getAboutText());
-        body.put("acknowledgeText", application.getAcknowledgeText());
-
+        
         return new TemplateResponseValues(TEMPLATE_DEFAULT, body);
     }
 
     @Override
     protected String getTitle(String siteName, VitroRequest vreq) {
-    	return I18n.text(vreq,"about") + " " + siteName;
+    	return I18n.text(vreq,"menu_privacy_policy") + " " + siteName;
     }
 
 }

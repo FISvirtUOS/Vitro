@@ -56,8 +56,8 @@
 
 <#macro dataPropertyList property editable template=property.template>
     <#list property.statements as statement>
-        <@propertyListItem property statement editable ><#include "${template}"></@propertyListItem>
-    </#list>
+<@propertyListItem property statement editable ><#include "${template}"></@propertyListItem>
+    </#list> 
 </#macro>
 
 <#macro objectProperty property editable template=property.template>
@@ -165,9 +165,8 @@ name will be used as the label. -->
     <#else>
         <#local rangeUri = "" />
     </#if>
-    <li role="listitem">
-        <#nested>
-        <@editingLinks "${property.localName}" "${property.name}" statement editable rangeUri/>
+<li role="listitem"><#nested>
+<@editingLinks "${property.localName}" "${property.name}" statement editable rangeUri/>
     </li>
 </#macro>
 
@@ -270,9 +269,9 @@ name will be used as the label. -->
     <#-- Don't assume that if the mainImage property is populated, there is a thumbnail image (though that is the general case).
          If there's a mainImage statement but no thumbnail image, treat it as if there is no image. -->
     <#if (mainImage.statements)?has_content && thumbUrl?has_content>
-        <a href="${individual.imageUrl}" title="${i18n().alt_thumbnail_photo}">
-        	<img class="individual-photo" src="${thumbUrl}" title="${i18n().click_to_view_larger}" alt="${individual.name}" width="${imageWidth!}" />
-        </a>
+        <#-- <a href="${individual.imageUrl}" title="${i18n().alt_thumbnail_photo}"> -->
+        	<img class="individual-photo" src="${thumbUrl}" title="${i18n().alt_thumbnail_photo}" alt="${individual.name}" width="${imageWidth!}" />
+        <#-- </a> -->
         <@editingLinks "${mainImage.localName}" "" mainImage.first() editable />
     <#else>
         <#local imageLabel><@addLinkWithLabel mainImage editable "${i18n().photo}" /></#local>
@@ -320,7 +319,7 @@ name will be used as the label. -->
     	</#if>
 
         <span class="inline">
-            <a class="add-label" href="${labelLink}"
+            <a class="add-label" href="${labelLink}" style="background: initial; padding-left: initial;"
              title="${linkTitle}">
         	<img class="add-individual" src="${urls.images}/individual/manage-icon.png" alt="${imageAlt}" /></a>
         </span>
@@ -330,8 +329,31 @@ name will be used as the label. -->
 <#-- Most specific types -->
 <#macro mostSpecificTypes individual >
     <#list individual.mostSpecificTypes as type>
-        <span class="display-title">${type}</span>
+        <span>${type}</span>
     </#list>
+</#macro>
+
+<#-- Check if project is still running or finished -->
+<#macro projectRuntime ProjectEndDateTime >
+    <#assign aDateTime = .now>
+    <#if ProjectEndDateTime?? >  
+        <#list ProjectEndDateTime as someDateString>
+            <#if (someDateString.end)?? >
+                <#if someDateString.end?datetime('iso') < aDateTime>
+                    <span class="uos-project-runtime">${i18n().project_status}: ${i18n().project_finished}</span>
+                    <br/>
+                <#else>
+                    <span class="uos-project-runtime">${i18n().project_status}: ${i18n().project_running}</span>
+                    <br/>
+                </#if>
+            <#else>
+                <#if (someDateString.start)??>
+                    <span class="uos-project-runtime">${i18n().project_status}: ${i18n().project_running}</span>
+                    <br/>
+                </#if>
+            </#if>
+        </#list>
+    </#if>
 </#macro>
 
 <#macro mostSpecificTypesPerson individual editable>

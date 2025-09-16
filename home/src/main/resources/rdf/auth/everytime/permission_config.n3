@@ -1,5 +1,6 @@
 # $This file is distributed under the terms of the license in LICENSE$
 
+
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix auth: <http://vitro.mannlib.cornell.edu/ns/vitro/authorization#> .
 @prefix simplePermission: <java:edu.cornell.mannlib.vitro.webapp.auth.permissions.SimplePermission#> .
@@ -64,6 +65,10 @@ auth:ADMIN
     auth:hasPermission displayByRole:Admin ;
     auth:hasPermission editByRole:Admin ;
     auth:hasPermission publishByRole:Admin ;
+
+    # SparQL API
+	auth:hasPermission simplePermission:UseSparqlQueryApi;
+	auth:hasPermission simplePermission:UseSparqlUpdateApi;
     .
 
 auth:CURATOR
@@ -102,6 +107,10 @@ auth:CURATOR
     auth:hasPermission displayByRole:Curator ;
     auth:hasPermission editByRole:Curator ;
     auth:hasPermission publishByRole:Curator ;
+
+    # SparQL API
+    auth:hasPermission simplePermission:UseSparqlQueryApi;
+    auth:hasPermission simplePermission:UseSparqlUpdateApi;
     .
 
 auth:EDITOR

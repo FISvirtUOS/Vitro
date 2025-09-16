@@ -11,3 +11,289 @@
 # Find out how to use this file at
 # https://wiki.lyrasis.org/display/VIVODOC112x/Creating+short+views+of+individuals
 #
+
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix display: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
+@prefix mydomain: <https://fis.uos.de/vivouos/individual/> .
+@prefix datagetters: <java:edu.cornell.mannlib.vitro.webapp.utils.dataGetter.> .
+@prefix vivo: <http://vivoweb.org/ontology/core#> .
+@prefix kdsf: <http://kerndatensatz-forschung.de/owl/Basis#> .
+
+
+foaf:Organization
+    display:hasCustomView   mydomain:organizationBrowseView .
+
+vivo:AcademicDepartment
+    display:hasCustomView   mydomain:organizationBrowseView .
+
+vivo:Institute
+    display:hasCustomView   mydomain:organizationBrowseView .
+
+mydomain:organizationBrowseView
+    a                           display:customViewForIndividual ;
+    display:appliesToContext    "BROWSE" ;
+    display:hasTemplate         "view-browse-organization.ftl" .
+
+kdsf:Professoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+kdsf:Vertretungsprofessoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+kdsf:Stiftungsprofessoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+kdsf:Seniorprofessoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+kdsf:OrdentlicheProfessoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+kdsf:Juniorprofessoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+kdsf:HauptberuflicheGastprofessoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+kdsf:AusserplanmaessigeProfessoren
+    display:hasCustomView   mydomain:professorBrowseView .
+
+kdsf:Drittmittelprojekt
+    display:hasCustomView   mydomain:projectBrowseView .
+
+kdsf:Publikation
+    display:hasCustomView   mydomain:publicationBrowseView .
+
+kdsf:Sammelband
+    display:hasCustomView   mydomain:publicationBrowseView .
+
+kdsf:Sammelbandbeitrag
+    display:hasCustomView   mydomain:publicationBrowseView .
+
+kdsf:Monographie
+    display:hasCustomView   mydomain:publicationBrowseView .
+
+kdsf:Journalartikel
+    display:hasCustomView   mydomain:publicationBrowseView .
+
+kdsf:ePaper
+    display:hasCustomView   mydomain:publicationBrowseView .
+
+kdsf:Review
+    display:hasCustomView   mydomain:publicationBrowseView .
+
+kdsf:StrukturiertesPromotionsprogramm
+    display:hasCustomView   mydomain:grakoBrowseView .
+
+vivo:Presentation
+    display:hasCustomView   mydomain:wissensforumBrowseView .
+
+
+mydomain:professorBrowseView
+    a                           display:customViewForIndividual ;
+    display:appliesToContext    "BROWSE" ;
+    display:hasTemplate         "view-browse-professor.ftl" ;
+    display:hasDataGetter mydomain:professordenominationDG ;
+    display:hasDataGetter mydomain:professorprofessurDG .
+
+mydomain:projectBrowseView
+    a                           display:customViewForIndividual ;
+    display:appliesToContext    "BROWSE" ;
+    display:hasTemplate         "view-browse-project.ftl" ;
+    display:hasDataGetter mydomain:projectstaffDG ;
+    display:hasDataGetter mydomain:projectdateDG .
+
+mydomain:publicationBrowseView
+    a                           display:customViewForIndividual ;
+    display:appliesToContext    "BROWSE" ;
+    display:hasTemplate         "view-browse-publication.ftl" ;
+    display:hasDataGetter mydomain:publicationstaffDG ;
+    display:hasDataGetter mydomain:publicationdateDG .
+
+mydomain:wissensforumBrowseView
+a                           display:customViewForIndividual ;
+    display:appliesToContext    "BROWSE" ;
+    display:hasTemplate         "view-browse-presentation.ftl" ;
+    display:hasDataGetter mydomain:presentationdateDG ;
+    display:hasDataGetter mydomain:presentationstaffDG .
+
+mydomain:grakoBrowseView
+a                           display:customViewForIndividual ;
+    display:appliesToContext    "BROWSE" ;
+    display:hasTemplate         "view-browse-grako.ftl" ;
+    display:hasDataGetter mydomain:grakofundingDG .
+
+mydomain:professordenominationDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "denom" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+PREFIX uoscore:  <https://fis.uos.de/vivouos/ontology/uoscore/>
+SELECT ?profdenom
+WHERE
+{
+?individualUri uoscore:Denomination ?profdenom .
+}
+	""" .
+
+mydomain:grakofundingDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "grako_funding" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+PREFIX uoscore:  <https://fis.uos.de/vivouos/ontology/uoscore/>
+SELECT ?funding ?mittelgeber_uri
+    WHERE
+    {
+        ?individualUri a kdsf:StrukturiertesPromotionsprogramm .
+        ?individualUri uoscore:hatMittelgeber ?mittelgeber_uri .
+  		?mittelgeber_uri rdfs:label ?funding
+        FILTER (lang(?funding) = "" || langMatches(lang(?funding), "de"))
+    }
+	""" .
+
+
+mydomain:professorprofessurDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "professur" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+SELECT ?bezeichnung 
+WHERE
+{
+?individualUri kdsf:BezeichnungDerProfessur ?bezeichnung .
+}
+	""" .
+
+mydomain:projectstaffDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "staff" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+PREFIX obo:  <http://purl.obolibrary.org/obo/>
+SELECT ?stafflabel ?staffuri 
+WHERE
+{
+?individualUri a kdsf:Drittmittelprojekt .
+?individualUri obo:BFO_0000055 ?memberrole .
+?memberrole obo:RO_0000052 ?staffuri .
+?staffuri rdfs:label ?stafflabel
+}
+	""" .
+
+mydomain:projectdateDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "projectdate" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+PREFIX obo:  <http://purl.obolibrary.org/obo/>
+PREFIX vivo:  <http://vivoweb.org/ontology/core#>
+SELECT ?projectdatelabel 
+WHERE
+{
+?individualUri a kdsf:Drittmittelprojekt .
+?individualUri vivo:dateTimeInterval ?DateTime .
+?DateTime rdfs:label ?projectdatelabel
+}
+	""" .
+
+mydomain:publicationstaffDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "staff" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+PREFIX obo:  <http://purl.obolibrary.org/obo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+SELECT ?stafflabel ?staffuri ?isvcard
+WHERE
+{ {
+?individualUri a kdsf:Publikation .
+?individualUri vivo:relatedBy ?memberrole .
+?memberrole vivo:relates ?staffuri .
+?staffuri a kdsf:Person .
+?staffuri rdfs:label ?stafflabel
+BIND( "false" AS ?isvcard)
+}
+UNION
+{
+?individualUri a kdsf:Publikation .
+?individualUri vivo:relatedBy ?memberrole .
+?memberrole vivo:relates ?staffuri .
+?staffuri a vcard:Individual .
+?staffuri vcard:hasName ?name .
+?name vcard:familyName ?nachname .
+?name vcard:givenName ?vorname
+BIND(CONCAT(STR( ?nachname + ", " ), STR(?vorname) ) AS ?stafflabel)
+BIND( "true" AS ?isvcard)
+} }
+	""" .
+
+mydomain:publicationdateDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "publicationdate" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+PREFIX obo:  <http://purl.obolibrary.org/obo/>
+PREFIX vivo:  <http://vivoweb.org/ontology/core#>
+SELECT ?publicationdatelabel 
+WHERE
+{
+?individualUri a kdsf:Publikation .
+?individualUri vivo:dateTimeValue ?DateTime .
+?DateTime vivo:dateTime ?publicationdatelabel
+}
+	""" .
+
+mydomain:presentationstaffDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "staff" ;
+	display:query """
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX kdsf:  <http://kerndatensatz-forschung.de/owl/Basis#>
+PREFIX obo:  <http://purl.obolibrary.org/obo/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+SELECT ?stafflabel ?staffuri ?isvcard
+WHERE
+{ {
+?individualUri a vivo:Presentation .
+?individualUri obo:BFO_0000055 ?memberrole .
+?memberrole  obo:RO_0000052 ?staffuri .
+?staffuri a kdsf:Person .
+?staffuri rdfs:label ?stafflabel
+BIND( "false" AS ?isvcard)
+}
+UNION
+{
+?individualUri a vivo:Presentation .
+?individualUri obo:BFO_0000055 ?memberrole .
+?memberrole obo:RO_0000052 ?staffuri .
+?staffuri a vcard:Individual .
+?staffuri vcard:hasName ?name .
+?name vcard:familyName ?stafflabel .
+BIND( "true" AS ?isvcard)
+} }
+	""" .
+
+mydomain:presentationdateDG
+    a datagetters:SparqlQueryDataGetter ;
+	display:saveToVar "presentationdate" ;
+	display:query """
+PREFIX uoscore: <https://fis.uos.de/vivouos/ontology/uoscore/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+SELECT ?date ?video
+WHERE
+{
+?individualUri a vivo:Presentation .
+OPTIONAL { ?individualUri uoscore:veranstaltungsdatum ?date }
+OPTIONAL { ?individualUri uoscore:videovortrag ?video }
+}
+    """ .

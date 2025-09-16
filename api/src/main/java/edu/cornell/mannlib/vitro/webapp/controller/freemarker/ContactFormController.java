@@ -14,6 +14,7 @@ import edu.cornell.mannlib.vitro.webapp.controller.VitroRequest;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.ResponseValues;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.TemplateResponseValues;
 import edu.cornell.mannlib.vitro.webapp.email.FreemarkerEmailFactory;
+import edu.cornell.mannlib.vitro.webapp.i18n.I18n;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,7 +35,7 @@ public class ContactFormController extends FreemarkerHttpServlet {
 
     @Override
     protected String getTitle(String siteName, VitroRequest vreq) {
-        return siteName + " Feedback Form";
+        return I18n.text(vreq,"contact_capitalized") + " " + siteName;
     }
 
     @Override
@@ -70,6 +71,16 @@ public class ContactFormController extends FreemarkerHttpServlet {
                 vreq.getSession().setAttribute("contactFormReferer",vreq.getHeader("Referer"));
             }
 
+
+            if (vreq.getParameter("broken_link") != null) {
+                if (vreq.getParameter("profile") != null) {
+                    String message = String.format(I18n.text(vreq, "report_link_with_profile"), vreq.getParameter("profile"), vreq.getParameter("broken_link"));
+                    body.put("report_link_message", message);
+                } else {
+                    String message = String.format(I18n.text(vreq, "report_link"), vreq.getParameter("broken_link"));
+                    body.put("report_link_message", message);
+                }
+            }
             templateName = TEMPLATE_DEFAULT;
         }
 

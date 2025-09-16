@@ -15,7 +15,7 @@
 
     <form name="contact_form" id="contact_form" class="customForm" action="${formAction!}" method="post" onSubmit="return ValidateForm('contact_form');" role="contact form">
         <div>
-          <input type="hidden" name="RequiredFields" value="webusername,webuseremail,s34gfd88p9x1" />
+          <input type="hidden" name="RequiredFields" value="webusername,webuseremail,s34gfd88p9x1,websubject" />
           <input type="hidden" name="RequiredFieldsNames" value="Name,Email address,Comments" />
           <input type="hidden" name="EmailFields" value="webuseremail" />
           <input type="hidden" name="EmailFieldsNames" value="emailaddress" />
@@ -30,10 +30,19 @@
           <input type="text" name="webuseremail"  value="${webuseremail!}"/>
         </div>
 
-        <div>
-          <label>${i18n().comments_questions} <span class="requiredHint"> *</span></label><br/>
-          <textarea name="s34gfd88p9x1" rows="10" cols="90">${comments!}</textarea>
-        </div>
+        <label for="websubject">${i18n().mail_subject} <span class="requiredHint"> *</span></label>
+        
+        <#if report_link_message?has_content>
+            <input type="text" name="websubject"  value="${i18n().report_broken_link}"/>
+ 
+            <label>${i18n().comments_questions} <span class="requiredHint"> *</span></label>
+            <textarea name="s34gfd88p9x1" rows="10" cols="90">${report_link_message}</textarea>
+        <#else>
+            <input type="text" name="websubject"  value="${i18n().mail_subject}"/>
+
+            <label>${i18n().comments_questions} <span class="requiredHint"> *</span></label>
+            <textarea name="s34gfd88p9x1" rows="10" cols="90">${comments!}</textarea>
+        </#if>
 
 
         <#if captchaToUse == "RECAPTCHAV2">
