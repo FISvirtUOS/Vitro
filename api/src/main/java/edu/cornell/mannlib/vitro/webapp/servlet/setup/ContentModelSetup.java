@@ -78,7 +78,7 @@ public class ContentModelSetup extends JenaDataSourceSetupBase
         	checkForNamespaceMismatch( applicationMetadataModel, ctx );
         }
         OntModel temporaryAMModel = VitroModelFactory.createOntologyModel();
-    	RDFFilesLoader.loadEveryTimeFiles("applicationMetadata", temporaryAMModel);
+    	RDFFilesLoader.loadEveryTimeFiles(ctx, "applicationMetadata", temporaryAMModel);
     	setPortalUriOnFirstTime(temporaryAMModel, ctx);
     	applicationMetadataModel.add(temporaryAMModel);
         
