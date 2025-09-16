@@ -87,7 +87,7 @@ public class ContactMailController extends FreemarkerHttpServlet {
         String webuseremail = nonNullAndTrim(vreq, WEB_USEREMAIL_PARAM);
         String comments = nonNullAndTrim(vreq, COMMENTS_PARAM);
         String formType = nonNullAndTrim(vreq, "DeliveryType");
-        String websubject = nonNullAndTrim(vreq, WEB_SUBJECT)
+        String websubject = nonNullAndTrim(vreq, WEB_SUBJECT);
 
         String captchaInput;
         String captchaId = "";
