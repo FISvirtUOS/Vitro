@@ -79,7 +79,8 @@ public class JsonServlet extends VitroHttpServlet {
                 new GetRenderedSearchIndividualsByVClassAndFilter(vreq).process(resp);
             }else if (vreq.getParameter("getFilterForRenderedSearchIndividualsByVClass") != null) {
                 log.info("Check if there are active filters in the Session (browseByVClassAndFilter");
-                new GetRenderedSearchIndividualsByVClassAndFilter(vreq).getFilter(resp);else if( vreq.getParameter("getRandomSearchIndividualsByVClass") != null ){
+                new GetRenderedSearchIndividualsByVClassAndFilter(vreq).getFilter(resp);
+            } else if( vreq.getParameter("getRandomSearchIndividualsByVClass") != null ){
 	            new GetRandomSearchIndividualsByVClass(vreq).process(resp);
 	        } else if( vreq.getParameter("getAllVClasses") != null ){
 	            new GetAllVClasses(vreq).process(resp);
