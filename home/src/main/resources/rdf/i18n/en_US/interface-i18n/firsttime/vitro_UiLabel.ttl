@@ -6445,3 +6445,39 @@ uil-data:suppress_operation_for_unrelated_individuals_of_this_class.Vitro
         uil:hasApp       "Vitro" ;
         uil:hasKey       "suppress_operation_for_unrelated_individuals_of_this_class" ;
         uil:hasPackage   "Vitro-languages" .
+
+
+
+
+#### UOS Stuff
+uil-data:there_are_no.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "There are no"@en-US ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "there_are_no" ;
+        uil:hasPackage  "Vitro-languages" .
+
+uil-data:individuals_names_starting_with_filters.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "whose name starts with"@en-US ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "individuals_names_starting_with_filters" ;
+        uil:hasPackage  "Vitro-languages" .
+
+uil-data:pls_change_your_selection.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "Please change your selection."@en-US ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "pls_change_your_selection" ;
+        uil:hasPackage  "Vitro-languages" .
+
+uil-data:with_the_selected_filters.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "s with these selected filters"@en-US ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "with_the_selected_filters" ;
+        uil:hasPackage  "Vitro-languages" .

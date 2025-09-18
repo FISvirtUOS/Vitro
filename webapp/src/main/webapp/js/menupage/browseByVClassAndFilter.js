@@ -478,9 +478,9 @@ var browseByVClass = {
             }
         } else {
             if ( alpha != "all" ) {
-                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + ' ' + browseByVClass.indNamesStartWith + ' <em>'+ alpha.toUpperCase() +'</em>.</p> <p class="no-individuals">' + browseByVClass.tryAnotherLetter + '</p>';
+                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNoEntriesStartingWith + ' <em>'+ alpha.toUpperCase() +'</em>.</p> <p class="no-individuals">' + browseByVClass.tryAnotherLetter + '</p>';
             } else {
-                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNo + ' ' + vclass.name + ' ' + browseByVClass.indsInSystem + '</p> <p class="no-individuals">' + browseByVClass.selectAnotherClass + '</p>';
+                nothingToSeeHere = '<p class="no-individuals">' + browseByVClass.thereAreNoEntriesStartingWith + '</p> <p class="no-individuals">' + browseByVClass.selectAnotherClass + '</p>';
             }
         }
 

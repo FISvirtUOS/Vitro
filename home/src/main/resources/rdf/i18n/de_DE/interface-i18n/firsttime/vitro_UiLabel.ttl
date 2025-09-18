@@ -6445,3 +6445,41 @@ uil-data:password_reset_admin_notification_email_html.Vitro
         uil:hasApp       "Vitro" ;
         uil:hasKey       "password_reset_admin_notification_email_html" ;
         uil:hasPackage   "Vitro-languages" .
+
+
+
+
+
+#### UOS STUFF
+
+uil-data:there_are_no.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "Es gibt keine"@de-DE ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "there_are_no" ;
+        uil:hasPackage  "Vitro-languages" .
+
+uil-data:individuals_names_starting_with_filters.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "und dem Anfangsbuchstaben"@de-DE ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "individuals_names_starting_with_filters" ;
+        uil:hasPackage  "Vitro-languages" .
+
+uil-data:pls_change_your_selection.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "Bitte ändern Sie Ihre Auswahl"@de-DE ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "pls_change_your_selection" ;
+        uil:hasPackage  "Vitro-languages" .
+
+uil-data:with_the_selected_filters.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "e mit dieser Filterauswahl"@de-DE ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "with_the_selected_filters" ;
+        uil:hasPackage  "Vitro-languages" .
