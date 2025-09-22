@@ -5,7 +5,7 @@
 <#-- <h2>${siteName!}</h2> -->
 
 <section class="uos_style" role="region">
-    <h2>Legal notice</h2>
+    <h2>Legal notice - altes template</h2>
 <p>In accordance with § 5 TMG:</p>
 <p>University Osnabrück<br />
 	Neuer Graben 29 / Schloss<br />
