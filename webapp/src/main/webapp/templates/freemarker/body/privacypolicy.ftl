@@ -6,7 +6,7 @@
 
 <section class="uos_style" role="region">
     <h2>Privacy policy</h2>
-<h3>1. An overview of data protection</h3>
+<h3>1. An overview of data protection (old template, pls remove)</h3>
 <h4>General information</h4>
 <p>The following information will provide you with an easy to navigate overview of what will happen with your personal data when you visit our website. The term “personal data” comprises all data that can be used to personally identify you. For detailed information about the subject matter of data protection, please consult our Data Protection Declaration, which we have included beneath this copy.</p>
 <h4>Data recording on our website</h4>
