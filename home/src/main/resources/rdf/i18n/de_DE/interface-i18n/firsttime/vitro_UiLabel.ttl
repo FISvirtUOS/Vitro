@@ -6483,3 +6483,19 @@ uil-data:with_the_selected_filters.Vitro
         uil:hasApp      "Vitro" ;
         uil:hasKey      "with_the_selected_filters" ;
         uil:hasPackage  "Vitro-languages" .
+
+uil-data:mail_subject.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "Betreff"@de-DE ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "mail_subject" ;
+        uil:hasPackage  "Vitro-languages" .
+
+uil-data:uos_search_filter.Vitro
+        rdf:type         owl:NamedIndividual ;
+        rdf:type         uil:UILabel ;
+        rdfs:label       "Beschränken der Ergebnisse auf"@de-DE ;
+        uil:hasApp      "Vitro" ;
+        uil:hasKey      "uos_search_filter" ;
+        uil:hasPackage  "Vitro-languages" .
